@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="justkiddinguo.com/"/>
-  <updated>2018-07-24T02:17:28.000Z</updated>
+  <updated>2018-07-27T12:06:22.000Z</updated>
   <id>justkiddinguo.com/</id>
   
   <author>
@@ -18,21 +18,24 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="justkiddinguo.com/2018/07/24/hello-world/"/>
-    <id>justkiddinguo.com/2018/07/24/hello-world/</id>
-    <published>2018-07-24T02:17:28.000Z</published>
-    <updated>2018-07-24T02:17:28.000Z</updated>
+    <link href="justkiddinguo.com/2018/03/01/hello-world/"/>
+    <id>justkiddinguo.com/2018/03/01/hello-world/</id>
+    <published>2018-03-01T15:47:44.000Z</published>
+    <updated>2018-07-27T12:06:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="搬家啦"><a href="#搬家啦" class="headerlink" title="搬家啦"></a>搬家啦</h1><p>从今天起博客就搬来这边啦，之前写的东西什么时候心情好慢慢再往这边放吧（但是感觉心情不太容易能好起来…）CSDN拜拜了您👋</p><h2 id="人穷志短之试用期的诱惑"><a href="#人穷志短之试用期的诱惑" class="headerlink" title="人穷志短之试用期的诱惑"></a>人穷志短之试用期的诱惑</h2><h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>由于最近换了组，再加上一些七七八八的原因，要抛弃DataGrip改用navicat了…懒得找破解版，注册机的安全性也存疑，所以就想了一个办法看看能不能一直试用这个软件。</p><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>原理其实很简单，写一个.bat文件管理员运行，更改一下系统时间并且让这个时间处于使用期限之内，这个时候打开软件调用系统日期，就可以正常试用，软件打开后再迅速把系统日期改回去就OK了。</p><h3 id="存疑"><a href="#存疑" class="headerlink" title="存疑"></a>存疑</h3><p>这么瞎改系统时间会不会影响到别的进程，导致出奇奇怪怪的bug，老实讲我也不知道，先把它记在小本本上，回头有需要时刻联网的精密操作再密切观察吧（反正也就3秒啦）。</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>运行的时候会把日期改成7.28，之后再改回去，然后某软件的安装路径DIY一下就好了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">set dataa= %date:~0,4%-%date:~5,2%-%date:~8,2%</span><br><span class="line">date 2018-7-28</span><br><span class="line"></span><br><span class="line">@start &quot;&quot; &quot;D:\Navicat 12 for MySQL\navicat.exe&quot;</span><br><span class="line"></span><br><span class="line">@ping 127.0.0.1 -n 3 &gt;nul</span><br><span class="line">date %dataa%</span><br></pre></td></tr></table></figure><h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>其实这个方法应该仅限于使用系统时钟来计时的软件，如果用网络时钟或者自带时钟肯定是钻不了这个空子了，可能某厂商的用户都是集团、公司这些不差钱的，不在乎小虾米们吧。以后要好好赚钱坦坦荡荡买正版，不费功夫搞这些奇奇怪怪的东西啦～</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+        &lt;h1 id=&quot;搬家啦&quot;&gt;&lt;a href=&quot;#搬家啦&quot; class=&quot;headerlink&quot; title=&quot;搬家啦&quot;&gt;&lt;/a&gt;搬家啦&lt;/h1&gt;&lt;p&gt;从今天起博客就搬来这边啦，之前写的东西什么时候心情好慢慢再往这边放吧（但是感觉心情不太容易能好起来…）CSDN拜拜了您👋&lt;/p&gt;
+
       
     
     </summary>
+    
+      <category term="Other" scheme="justkiddinguo.com/categories/Other/"/>
     
     
   </entry>
