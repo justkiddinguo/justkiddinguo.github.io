@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="右边的小耳朵" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Hibernate_day01框架和CRM项目的整体介绍​     1、什么是CRM​       CRM（Customer Relationship Management）客户关系管理，是利用相应的信息技术以及互联网技术来协调企业与顾客间在销售、营销和服务上的交互，向客户提供创新式的个性化的客户交互和服务的过程。        其最终目标是将面向客户的各项信息和活动集成起来，组建一个以客户为中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate_day01">
+<meta property="og:url" content="justkiddinguo.com/2018/03/27/Hibernate_day01/index.html">
+<meta property="og:site_name" content="右边的小耳朵">
+<meta property="og:description" content="Hibernate_day01框架和CRM项目的整体介绍​     1、什么是CRM​       CRM（Customer Relationship Management）客户关系管理，是利用相应的信息技术以及互联网技术来协调企业与顾客间在销售、营销和服务上的交互，向客户提供创新式的个性化的客户交互和服务的过程。        其最终目标是将面向客户的各项信息和活动集成起来，组建一个以客户为中">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="justkiddinguo.com/2018/03/27/Hibernate_day01/图片/01-CRM模块.bmp">
+<meta property="og:image" content="justkiddinguo.com/2018/03/27/Hibernate_day01/图片/02-SSH框架.bmp">
+<meta property="og:image" content="justkiddinguo.com/2018/03/27/Hibernate_day01/图片/03-Hibernate的开发位置.bmp">
+<meta property="og:image" content="justkiddinguo.com/2018/03/27/Hibernate_day01/图片/04-ORM概述.bmp">
+<meta property="og:image" content="justkiddinguo.com/2018/03/27/Hibernate_day01/图片/05-SessionFactory.bmp">
+<meta property="og:updated_time" content="2018-09-17T12:29:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate_day01">
+<meta name="twitter:description" content="Hibernate_day01框架和CRM项目的整体介绍​     1、什么是CRM​       CRM（Customer Relationship Management）客户关系管理，是利用相应的信息技术以及互联网技术来协调企业与顾客间在销售、营销和服务上的交互，向客户提供创新式的个性化的客户交互和服务的过程。        其最终目标是将面向客户的各项信息和活动集成起来，组建一个以客户为中">
+<meta name="twitter:image" content="justkiddinguo.com/2018/03/27/Hibernate_day01/图片/01-CRM模块.bmp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="justkiddinguo.com/2018/03/27/Hibernate_day01/"/>
+
+
+
+
+
+  <title>Hibernate_day01 | 右边的小耳朵</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">右边的小耳朵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">With luck,forward.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/03/27/Hibernate_day01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hibernate_day01</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T13:31:01+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hibernate/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h1 id="Hibernate-day01"><a href="#Hibernate-day01" class="headerlink" title="Hibernate_day01"></a>Hibernate_day01</h1><h2 id="框架和CRM项目的整体介绍"><a href="#框架和CRM项目的整体介绍" class="headerlink" title="框架和CRM项目的整体介绍"></a><strong>框架和CRM项目的整体介绍</strong></h2><p>​    </p>
+<h3 id="1、什么是CRM"><a href="#1、什么是CRM" class="headerlink" title="1、什么是CRM"></a>1、什么是CRM</h3><p>​       CRM（Customer Relationship Management）客户关系管理，是利用相应的信息技术以及互联网技术来协调企业与顾客间在销售、营销和服务上的交互，向客户提供创新式的个性化的客户交互和服务的过程。<br>        其最终目标是将面向客户的各项信息和活动集成起来，组建一个以客户为中心的企业，实现对面向客户的活动的全面管理。</p>
+<h3 id="2、CRM的模块"><a href="#2、CRM的模块" class="headerlink" title="2、CRM的模块"></a>2、CRM的模块</h3><p>​        CRM系统实现了对企业销售、营销、服务等各阶段的客户信息、客户活动进行统一管理。<br>        CRM系统功能涵盖企业销售、营销、用户服务等各各业务流程，业务流程中与客户相关活动都会在CRM系统统一管理。<br>        下边列出一些基本的功能模块，包括：</p>
+<ul>
+<li>客户信息管理</li>
+<li>联系人管理</li>
+<li>商机管理</li>
+<li>统计分析等</li>
+</ul>
+<p><img src="./图片/01-CRM模块.bmp" alt=""></p>
+<h3 id="3、模块的具体功能"><a href="#3、模块的具体功能" class="headerlink" title="3、模块的具体功能"></a>3、模块的具体功能</h3><ul>
+<li><p>客户信息管理</p>
+<p>对客户信息统一维护，客户是指存量客户或拟营销的客户，通过员工录入形成公司的“客户库”是公司最重要的数据资源。</p>
+</li>
+<li><p>联系人管理</p>
+<p>对客户的联系人信息统一管理，联系人是指客户企业的联系人，即企业的业务人员和客户的哪些人在打交道。</p>
+</li>
+<li><p>客户拜访管理</p>
+<p>业务员要开发客户需要去拜访客户，客户拜访信息记录了业务员与客户沟通交流方面的不足、采取的策略不当、有待改进的地方或值得分享的沟通技巧等方面的信息。</p>
+</li>
+<li><p>综合查询</p>
+<p>客户相关信息查询，包括：客户信息查询、联系人信息查询、商机信息查询等。</p>
+</li>
+<li><p>统计分析</p>
+<p>按分类统计客户信息，包括：客户信息来源统计、按行业统计客户、客户发展数量统计等。</p>
+</li>
+<li><p>系统管理<br>系统管理属于crm系统基础功能模块，包括：数据字典、账户管理、角色管理、权限管理、操作日志管理等。</p>
+</li>
+</ul>
+<p><img src="./图片/02-SSH框架.bmp" alt=""></p>
+<hr>
+<h2 id="Hibernate框架的学习路线"><a href="#Hibernate框架的学习路线" class="headerlink" title="Hibernate框架的学习路线"></a><strong>Hibernate框架的学习路线</strong></h2><p><img src="./图片/03-Hibernate的开发位置.bmp" alt=""><br>只需要学习JDBC接口规范就能操作数据库，面向接口编程即可，不需要关注具体实现过程，它们分别由不同的驱动进行实现。</p>
+<p>由于代码非常固定，可使用DButils工具类进行简化（对JDBC进行了封装简化，底层还都是JDBC）。但存在一定的局限：表结构字段的名称如果和javabean的属性不一致会报错。</p>
+<p>Hibernate框架：已经帮助程序员完成了部分的功能，没有DButils中的局限。二级缓存——redis</p>
+<hr>
+<h2 id="案例一：完成客户的CRUD的操作"><a href="#案例一：完成客户的CRUD的操作" class="headerlink" title="案例一：完成客户的CRUD的操作"></a>案例一：完成客户的CRUD的操作</h2><hr>
+<h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a><strong>需求分析</strong></h3><p>CRM系统中客户信息管理模块功能包括</p>
+<ul>
+<li>新增客户信息</li>
+<li>客户信息查询</li>
+<li>修改客户信息</li>
+<li>删除客户信息</li>
+<li>要实现客户的新增功能</li>
+</ul>
+<hr>
+<h2 id="技术分析之Hibernate框架的概述"><a href="#技术分析之Hibernate框架的概述" class="headerlink" title="技术分析之Hibernate框架的概述"></a>技术分析之Hibernate框架的概述</h2><hr>
+<h3 id="Hibernate框架的概述"><a href="#Hibernate框架的概述" class="headerlink" title="Hibernate框架的概述"></a><strong>Hibernate框架的概述</strong></h3><ul>
+<li>Hibernate是一个开放源代码的对象关系映射（ORM）框架，它对JDBC进行了非常轻量级的对象封装，使得Java程序员可以随心所欲的使用对象编程思维来操纵数据库。 </li>
+<li>Hibernate可以应用在任何使用JDBC的场合，既可以在Java的客户端程序使用，也可以在Servlet/JSP的Web应用中使用。</li>
+<li>Hibernate是轻量级JavaEE应用的持久层解决方案，是一个关系数据库ORM框架</li>
+</ul>
+<p>​            <strong>Hibernate是一个持久层的ORM框架</strong></p>
+<hr>
+<h3 id="什么是ORM（对象关系映射）"><a href="#什么是ORM（对象关系映射）" class="headerlink" title="什么是ORM（对象关系映射）"></a><strong>什么是ORM（对象关系映射）</strong></h3><p>ORM映射：Object Relational Mapping</p>
+<ul>
+<li>O：面向对象领域的Object（JavaBean对象）</li>
+<li>R：关系数据库领域的Relational（表的结构）</li>
+<li>M：映射Mapping（XML的配置文件）</li>
+<li>简单一句话：Hibernate使程序员通过操作对象的方式来操作数据库表记录。</li>
+</ul>
+<p><img src="./图片/04-ORM概述.bmp" alt=""></p>
+<hr>
+<h3 id="Hibernate优点"><a href="#Hibernate优点" class="headerlink" title="Hibernate优点"></a><strong>Hibernate优点</strong></h3><ul>
+<li>Hibernate对JDBC访问数据库的代码做了封装，大大简化了数据访问层繁琐的重复性代码。</li>
+<li>Hibernate是一个基于jdbc的主流持久化框架，是一个优秀的orm实现，它很大程度的简化了dao层编码工作。</li>
+<li>Hibernate的性能非常好，因为它是一个轻量级框架（重量级：EJB，SUN公司提供的编写javaEE的框架）。映射的灵活性很出色。它支持很多关系型数据库，包括一对一到多对多的各种复杂关系。</li>
+</ul>
+<hr>
+<h2 id="技术分析之Hibernate框架的快速入门"><a href="#技术分析之Hibernate框架的快速入门" class="headerlink" title="技术分析之Hibernate框架的快速入门"></a>技术分析之Hibernate框架的快速入门</h2><hr>
+<p><strong>第一步：下载Hibernate5的运行环境</strong></p>
+<ol>
+<li><p>下载相应的jar包等</p>
+<p><a href="http://sourceforge.net/projects/hibernate/files/hibernate-orm/5.0.7.Final/hibernate-release-5.0.7.Final.zip/download" target="_blank" rel="noopener">http://sourceforge.net/projects/hibernate/files/hibernate-orm/5.0.7.Final/hibernate-release-5.0.7.Final.zip/download</a>    </p>
+</li>
+<li><p>解压后对目录结构有一定的了解：project/etc:配置文件</p>
+</li>
+</ol>
+<hr>
+<p><strong>第二步：创建表结构</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. 建表语句如下</span><br><span class="line">	Create database hibernate_day01;</span><br><span class="line">	Use hibernate_day01;</span><br><span class="line">	CREATE TABLE `cst_customer` (</span><br><span class="line">	  `cust_id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT &apos;客户编号(主键)&apos;,</span><br><span class="line">	  `cust_name` varchar(32) NOT NULL COMMENT &apos;客户名称(公司名称)&apos;,</span><br><span class="line">	  `cust_user_id` bigint(32) DEFAULT NULL COMMENT &apos;负责人id&apos;,</span><br><span class="line">	  `cust_create_id` bigint(32) DEFAULT NULL COMMENT &apos;创建人id&apos;,</span><br><span class="line">	  `cust_source` varchar(32) DEFAULT NULL COMMENT &apos;客户信息来源&apos;,</span><br><span class="line">	  `cust_industry` varchar(32) DEFAULT NULL COMMENT &apos;客户所属行业&apos;,</span><br><span class="line">	  `cust_level` varchar(32) DEFAULT NULL COMMENT &apos;客户级别&apos;,</span><br><span class="line">	  `cust_linkman` varchar(64) DEFAULT NULL COMMENT &apos;联系人&apos;,</span><br><span class="line">	  `cust_phone` varchar(64) DEFAULT NULL COMMENT &apos;固定电话&apos;,</span><br><span class="line">	  `cust_mobile` varchar(16) DEFAULT NULL COMMENT &apos;移动电话&apos;,</span><br><span class="line">	  PRIMARY KEY (`cust_id`)</span><br><span class="line">	) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>第三步：搭建Hibernate的开发环境</strong><br>创建WEB工程，引入Hibernate开发所需要的jar包</p>
+<ul>
+<li>MySQL的驱动jar包</li>
+<li>Hibernate开发需要的jar包（资料/hibernate-release-5.0.7.Final/lib/required/所有jar包）</li>
+<li>日志jar包（资料/jar包/log4j/所有jar包）</li>
+</ul>
+<hr>
+<p><strong>第四步：编写JavaBean实体类</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1. Customer类的代码如下：</span><br><span class="line">	public class Customer &#123;</span><br><span class="line">		private Long cust_id;</span><br><span class="line">		private String cust_name;</span><br><span class="line">		private Long cust_user_id;</span><br><span class="line">		private Long cust_create_id;</span><br><span class="line">		private String cust_source;</span><br><span class="line">		private String cust_industry;</span><br><span class="line">		private String cust_level;</span><br><span class="line">		private String cust_linkman;</span><br><span class="line">		private String cust_phone;</span><br><span class="line">		private String cust_mobile;</span><br><span class="line">		// 省略get和<span class="keyword">set</span>方法</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>第五步：创建类与表结构的映射</strong></p>
+<ol>
+<li><p>在JavaBean所在的包下创建映射的配置文件</p>
+<ul>
+<li>默认的命名规则为：实体类名.hbm.xml</li>
+<li>在xml配置文件中引入约束（引入的是hibernate3.0的dtd约束，不要引入4的约束）<br> &lt;!DOCTYPE hibernate-mapping PUBLIC <pre><code>&quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;
+&quot;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&quot;&gt;
+</code></pre></li>
+</ul>
+</li>
+<li><p>如果不能上网，编写配置文件是没有提示的，需要自己来配置</p>
+<ul>
+<li>先复制<a href="http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" target="_blank" rel="noopener">http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd</a> –&gt; window –&gt; preferences –&gt; 搜索xml –&gt; 选择xml catalog –&gt; 点击add –&gt; 现在URI –&gt; 粘贴复制的地址 –&gt; 选择location，选择本地的DTD的路径</li>
+</ul>
+</li>
+<li><p>编写映射的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE hibernate-mapping PUBLIC </span><br><span class="line"></span><br><span class="line">    &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;</span><br><span class="line"></span><br><span class="line">    &quot;http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;hibernate-mapping&gt;</span><br><span class="line"></span><br><span class="line">	&lt;class name=&quot;com.itheima.domain.Customer&quot; table=&quot;cst_customer&quot;&gt;</span><br><span class="line"></span><br><span class="line">		&lt;id name=&quot;cust_id&quot; column=&quot;cust_id&quot;&gt;</span><br><span class="line"></span><br><span class="line">			&lt;generator class=&quot;native&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;/id&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_name&quot; column=&quot;cust_name&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_user_id&quot; column=&quot;cust_user_id&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_create_id&quot; column=&quot;cust_create_id&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_source&quot; column=&quot;cust_source&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_industry&quot; column=&quot;cust_industry&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_level&quot; column=&quot;cust_level&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_linkman&quot; column=&quot;cust_linkman&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_phone&quot; column=&quot;cust_phone&quot;/&gt;</span><br><span class="line"></span><br><span class="line">		&lt;property name=&quot;cust_mobile&quot; column=&quot;cust_mobile&quot;/&gt;</span><br><span class="line"></span><br><span class="line">	&lt;/class&gt;</span><br><span class="line"></span><br><span class="line">&lt;/hibernate-mapping&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p><strong>第六步：编写Hibernate核心的配置文件</strong></p>
+<ol>
+<li><p>在src目录下，创建名称为hibernate.cfg.xml的配置文件</p>
+</li>
+<li><p>在XML中引入DTD约束<br> &lt;!DOCTYPE hibernate-configuration PUBLIC<br>   “-//Hibernate/Hibernate Configuration DTD 3.0//EN”<br>   “<a href="http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;" target="_blank" rel="noopener">http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;</a></p>
+<p> . 打开：资料/hibernate-release-5.0.7.Final/project/etc/hibernate.properties，可以查看具体的配置信息    </p>
+<ul>
+<li><p>必须配置的4大参数<br>#hibernate.connection.driver_class com.mysql.jdbc.Driver<br>#hibernate.connection.url jdbc:mysql:///test<br>#hibernate.connection.username gavin<br>#hibernate.connection.password</p>
+</li>
+<li><p>数据库的方言（必须配置的）<br>#hibernate.dialect org.hibernate.dialect.MySQLDialect</p>
+</li>
+<li><p>可选的配置<br>#hibernate.show_sql true<br>#hibernate.format_sql true<br>#hibernate.hbm2ddl.auto update</p>
+</li>
+<li><p>引入映射配置文件（一定要注意，要引入映射文件，框架需要加载映射文件）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapping</span> <span class="attr">resource</span>=<span class="string">"com/itheima/domain/Customer.hbm.xml"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>4.具体的配置如下</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE hibernate-configuration PUBLIC</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">hibernate-configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">session-factory</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.driver_class"</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.url"</span>&gt;</span>jdbc:mysql:///hibernate_day01<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.username"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.connection.password"</span>&gt;</span>root<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.dialect"</span>&gt;</span>org.hibernate.dialect.MySQLDialect<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">mapping</span> <span class="attr">resource</span>=<span class="string">"com/itheima/domain/Customer.hbm.xml"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="name">session-factory</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">hibernate-configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p><strong>第七步：编写Hibernate入门代码</strong>    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">测试保存客户</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="meta">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSave</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// 先加载配置文件</span></span><br><span class="line">  Configuration config = <span class="keyword">new</span> Configuration();</span><br><span class="line">  <span class="comment">// 默认加载src目录下的配置文件</span></span><br><span class="line">  config.configure();</span><br><span class="line">  <span class="comment">// 创建SessionFactory对象</span></span><br><span class="line">  SessionFactory factory = config.buildSessionFactory();</span><br><span class="line">  <span class="comment">// 创建session对象</span></span><br><span class="line">  Session session = factory.openSession();</span><br><span class="line">  <span class="comment">// 开启事务</span></span><br><span class="line">  Transaction tr = session.beginTransaction();</span><br><span class="line">  <span class="comment">// 编写保存代码</span></span><br><span class="line">  Customer c = <span class="keyword">new</span> Customer();</span><br><span class="line">  <span class="comment">// c.setCust_id(cust_id);	已经自动递增</span></span><br><span class="line">  c.setCust_name(<span class="string">"测试名称"</span>);</span><br><span class="line">  c.setCust_mobile(<span class="string">"110"</span>);</span><br><span class="line">  <span class="comment">// 保存客户</span></span><br><span class="line">  session.save(c);</span><br><span class="line">  <span class="comment">// 提交事务</span></span><br><span class="line">  tr.commit();</span><br><span class="line">  <span class="comment">// 释放资源</span></span><br><span class="line">  session.close();</span><br><span class="line">  factory.close();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>回忆：快速入门</strong></p>
+<pre><code>1. 下载Hibernate框架的开发包
+2. 编写数据库和表结构。
+3. 创建WEB的项目，导入了开发的jar包：MySQL驱动包、Hibernate开发的必须要有的jar包、日志的jar包。
+4. 编写JavaBean，不使用基本数据类型，使用包装类。
+5. 编写映射的配置文件（核心），先导入开发的约束，里面正常配置标签。
+6. 编写hibernate的核心的配置文件，里面的内容是固定的。
+7. 编写代码，使用的类和方法。
+</code></pre><hr>
+<h3 id="技术分析之：Hibernate常用的配置文件"><a href="#技术分析之：Hibernate常用的配置文件" class="headerlink" title="技术分析之：Hibernate常用的配置文件"></a>技术分析之：Hibernate常用的配置文件</h3><hr>
+<p>映射文件，即Stu.hbm.xml的配置文件</p>
+<ul>
+<li><p><class>标签： 用来将类与数据库表建立映射关系</class></p>
+<p>name            – 类的全路径<br>table            – 表名.(类名与表名一致,那么table属性也可以省略) catalog                – 数据库的名称，基本上都会省略不写</p>
+</li>
+<li><p><id>标签：用来将类中的属性与表中的主键建立映射，id标签就是用来配置主键的。<br> name            – 类中属性名<br> column         – 表中的字段名(如果类中的属性名与表中的字段名一致,那么column可以省略）<br> length                – 字段的长度，如果数据库已经创建好了，那么length可以不写。如果没有创建好，生成表结构时，length最好指定。</id></p>
+</li>
+<li><p><property>        – 用来将类中的普通属性与表中的字段建立映射.<br> name            – 类中属性名<br> column                – 表中的字段名.(如果类中的属性名与表中的字段名一致,那么column可以省略)<br> length                – 数据长度<br> type            – 数据类型（一般都不需要编写，如果写需要按着规则来编写）</property></p>
+</li>
+<li><p>Hibernate的数据类型    type=”string”<br>Java的数据类型        type=”java.lang.String”<br>数据库字段的数据类型 <column name="name" sql-type="varchar"></column></p>
+</li>
+</ul>
+<hr>
+<p><strong>Hibernate配置文件之核心配置文件</strong><br>核心配置文件的两种方式</p>
+<p>1、第一种方式是属性文件的形式，即properties的配置文件</p>
+<ul>
+<li>hibernate.properties：hibernate.connection.driver_class=com.mysql.jdbc.Driver</li>
+<li>把注释打开，空格变等号</li>
+<li>缺点：不能加载映射的配置文件，需要手动编写代码去加载</li>
+</ul>
+<p>2、第二种方式是XML文件的形式，开发基本都会选择这种方式</p>
+<ul>
+<li>hibernate.cfg.xml：<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property></li>
+<li>优点：格式比较清晰；编写有提示；可以在该配置文件中加载映射的配置文件（最主要的）</li>
+</ul>
+<p>3、关于hibernate.cfg.xml的配置文件方式</p>
+<ul>
+<li><p>必须有的配置</p>
+<ul>
+<li><p>数据库连接信息:<br>  hibernate.connection.driver_class – 连接数据库驱动程序<br>  hibernate.connection.url                 – 连接数据库URL<br>  hibernate.connection.username    – 数据库用户名<br>  hibernate.connection.password     – 数据库密码</p>
+</li>
+<li><p>方言:<br>  hibernate.dialect  – 操作数据库方言</p>
+</li>
+</ul>
+</li>
+<li><p>可选的配置</p>
+<ul>
+<li><p>hibernate.show_sql                       – 显示SQL语句，在控制台显示<br> hibernate.format_sql                  – 格式化SQL语句<br>  hibernate.hbm2ddl.auto              – 通过映射转成DDL语句生成数据库表结构。</p>
+</li>
+<li><p>create                            – 每次都会创建一个新的表（测试用）</p>
+<p> create-drop            – 每次都会创建一个新的表,当执行结束之后,将创建的这个表删除（测试用）<br>  update                – 如果有表,使用原来的表；如果没表,创建一个新的表同时更新表结构（更新javabean和映射，但只能加不能删，如果需要删除写SQL语句：alter table XX drop XX（开发用）<br>  validate            – 如果有表,使用原来的表.同时校验映射文件与表中字段是否一致如果不一致就会报错</p>
+</li>
+</ul>
+</li>
+<li><p>加载映射</p>
+<ul>
+<li>如果XML方式：<mapping resource="cn/itcast/hibernate/domain/User.hbm.xml"></mapping></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="技术分析之Hibernate常用的接口和类"><a href="#技术分析之Hibernate常用的接口和类" class="headerlink" title="技术分析之Hibernate常用的接口和类"></a>技术分析之Hibernate常用的接口和类</h3><hr>
+<p><strong>Configuration类和作用</strong></p>
+<p>1、Configuration类</p>
+<ul>
+<li><p>Configuration对象用于配置并且启动Hibernate，默认加载src目录下的hibernate.cfg.xml的配置文件。采用xml文件的方式时必须调用config.configure()。</p>
+</li>
+<li><p><strong>简写: Configuration config =new Configuration().configure();</strong></p>
+<p>如果用的是属性文件，没有映射关系则需要手动加载：config.addResource(“com/guo/domain/Costumer.hbm.xml”)</p>
+</li>
+<li><p>Hibernate应用通过该对象来获得对象-关系映射文件中的元数据，以及动态配置Hibernate的属性，然后创建SessionFactory对象。</p>
+</li>
+<li><p>简单一句话：加载Hibernate的配置文件，可以获取SessionFactory对象。</p>
+</li>
+</ul>
+<p>2、Configuration类的其他应用（了解）</p>
+<ul>
+<li><p>加载配置文件的种类，Hibernate支持xml和properties类型的配置文件，在开发中基本都使用XML配置文件的方式。</p>
+</li>
+<li><p>如果采用的是properties的配置文件，那么通过Configuration config = new Configuration();就可以假装配置文件,但是需要自己手动加载映射文件。</p>
+</li>
+</ul>
+<hr>
+<p><strong>SessionFactory</strong></p>
+<ol>
+<li>负责初始化hibernate，充当数据存储的代理，是创建Session对象的工厂类。</li>
+<li><p>SessionFactory类的特点</p>
+<ul>
+<li><p>由Configuration通过加载配置文件创建该对象。</p>
+</li>
+<li><p>SessionFactory对象中保存了当前的数据库配置信息和所有映射关系以及预定义的SQL语句。同时，SessionFactory还负责维护Hibernate的二级缓存。</p>
+</li>
+<li><p>预定义SQL语句</p>
+<p>使用Configuration类创建了SessionFactory对象是，已经在SessionFacotry对象中<strong>缓存</strong>了一些SQL语句。</p>
+<p>常见的SQL语句是增删改查（通过主键来查询）。</p>
+<p>这样做的目的是效率更高。</p>
+</li>
+<li><p>一个SessionFactory实例对应一个数据库，应用从该对象中获得Session实例。</p>
+</li>
+<li><p>SessionFactory是线程安全的，意味着它的一个实例可以被应用的多个线程共享。</p>
+</li>
+<li><p>SessionFactory是重量级的，意味着不能随意创建或销毁它的实例。一般情况下，一个项目只需要一个SessionFactory，如果只访问一个数据库，只需要创建一个SessionFactory实例，且在应用初始化的时候完成；如果需要操作多个数据库时，可以为每个数据库指定一个SessionFactory。</p>
+</li>
+<li><p>SessionFactory需要一个较大的缓存，用来存放预定义的SQL语句及实体的映射信息。另外可以配置一个缓存插件，这个插件被称之为Hibernate的二级缓存，被多线程所共享</p>
+</li>
+</ul>
+</li>
+<li><p>总结：一般应用使用一个SessionFactory,最好是应用启动时就完成初始化。</p>
+</li>
+</ol>
+<p><img src="./图片/05-SessionFactory.bmp" alt=""><br>内部结构：无法进行操作，缓存SQL语句和加载配置信息。</p>
+<p>外部结构：二级缓存</p>
+<p><a href="https://blog.csdn.net/xlgen157387/article/details/40071651" target="_blank" rel="noopener">Hibernate的一级缓存与二级缓存</a></p>
+<hr>
+<p><strong>编写HibernateUtil的工具类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 具体代码如下</span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HibernateUtil</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Configuration cfg;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SessionFactory factory;</span><br><span class="line">		<span class="keyword">static</span>&#123;</span><br><span class="line">			<span class="comment">// 给常量赋值 </span></span><br><span class="line">			<span class="comment">// 加载配置文件</span></span><br><span class="line">			cfg = <span class="keyword">new</span> Configuration().configure();</span><br><span class="line">			<span class="comment">// 生成factory对象</span></span><br><span class="line">			factory = cfg.buildSessionFactory();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 获取Session对象</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Session <span class="title">openSession</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> factory.openSession();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Session接口</strong></p>
+<ol>
+<li><p>概述</p>
+<ul>
+<li>Session是在Hibernate中使用最频繁的接口。也被称之为持久化管理器。它提供了和持久化有关的操作，比如<strong>添加、修改、删除、加载和查询</strong>实体对象</li>
+<li>Session 是应用程序与数据库之间交互操作的一个单线程对象，是 Hibernate 运作的中心</li>
+<li>Session是线程不安全的，一次请求一个session，用完就销毁。</li>
+<li>所有持久化对象必须在 session 的管理下才可以进行持久化操作</li>
+<li>Session 对象有一个一级缓存，显式执行 flush 之前，所有的持久化操作的数据都缓存在 session 对象处</li>
+<li>持久化类与 Session 关联起来后就具有了持久化的能力</li>
+</ul>
+</li>
+<li><p>特点</p>
+<ul>
+<li>不是线程安全的。应避免多个线程使用同一个Session实例</li>
+<li>Session是轻量级的，它的创建和销毁不会消耗太多的资源。应为每次客户请求分配独立的Session实例</li>
+<li>Session有一个缓存，被称之为Hibernate的一级缓存。每个Session实例都有自己的缓存</li>
+</ul>
+</li>
+<li><p>常用的方法</p>
+<ul>
+<li>save(obj)</li>
+<li>delete(obj)  </li>
+<li>get(Class,id)</li>
+<li>update(obj)</li>
+<li>saveOrUpdate(obj)            – 保存或者修改（如果没有数据，保存数据。如果有，修改数据）</li>
+<li>createQuery()                 – HQL语句的查询的方式</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>Transaction接口</strong></p>
+<pre><code>1. Transaction是事务的接口
+2. 常用的方法
+    * commit()                -- 提交事务
+    * rollback()            -- 回滚事务
+
+3. 特点
+    * Hibernate框架默认情况下事务不自动提交.需要手动提交事务
+    * 如果没有开启事务，那么每个Session的操作，都相当于一个独立的事务
+</code></pre><hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/05/day17/" rel="next" title="Java学习日常之不知道什么时候能用上的API">
+                <i class="fa fa-chevron-left"></i> Java学习日常之不知道什么时候能用上的API
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/29/LeetCode__001 Two Sum/" rel="prev" title="LeetCode__001 Two Sum">
+                LeetCode__001 Two Sum <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Guo Zhangruo" />
+            
+              <p class="site-author-name" itemprop="name">Guo Zhangruo</p>
+              <p class="site-description motion-element" itemprop="description">I solemnly swear that I am up to no good.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate-day01"><span class="nav-number">1.</span> <span class="nav-text">Hibernate_day01</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#框架和CRM项目的整体介绍"><span class="nav-number">1.1.</span> <span class="nav-text">框架和CRM项目的整体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、什么是CRM"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、什么是CRM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、CRM的模块"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、CRM的模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、模块的具体功能"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、模块的具体功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate框架的学习路线"><span class="nav-number">1.2.</span> <span class="nav-text">Hibernate框架的学习路线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例一：完成客户的CRUD的操作"><span class="nav-number">1.3.</span> <span class="nav-text">案例一：完成客户的CRUD的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求分析"><span class="nav-number">1.3.1.</span> <span class="nav-text">需求分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术分析之Hibernate框架的概述"><span class="nav-number">1.4.</span> <span class="nav-text">技术分析之Hibernate框架的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate框架的概述"><span class="nav-number">1.4.1.</span> <span class="nav-text">Hibernate框架的概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是ORM（对象关系映射）"><span class="nav-number">1.4.2.</span> <span class="nav-text">什么是ORM（对象关系映射）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate优点"><span class="nav-number">1.4.3.</span> <span class="nav-text">Hibernate优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术分析之Hibernate框架的快速入门"><span class="nav-number">1.5.</span> <span class="nav-text">技术分析之Hibernate框架的快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#技术分析之：Hibernate常用的配置文件"><span class="nav-number">1.5.1.</span> <span class="nav-text">技术分析之：Hibernate常用的配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术分析之Hibernate常用的接口和类"><span class="nav-number">1.5.2.</span> <span class="nav-text">技术分析之Hibernate常用的接口和类</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guo Zhangruo</span>
+
+  
+</div>
+
+
+<!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
