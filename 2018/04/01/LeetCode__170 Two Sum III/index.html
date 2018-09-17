@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="LeetCode__170 Two Sum IIIDesign and implement a TwoSum class. It should support the following operations:add and find.  add - Add the number to an internal data structure. find - Find if there exists">
+<meta name="description" content="Design and implement a TwoSum class. It should support the following operations:add and find.  add - Add the number to an internal data structure. find - Find if there exists any pair of numbers which">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode__170 Two Sum III">
 <meta property="og:url" content="justkiddinguo.com/2018/04/01/LeetCode__170 Two Sum III/index.html">
 <meta property="og:site_name" content="右边的小耳朵">
-<meta property="og:description" content="LeetCode__170 Two Sum IIIDesign and implement a TwoSum class. It should support the following operations:add and find.  add - Add the number to an internal data structure. find - Find if there exists">
+<meta property="og:description" content="Design and implement a TwoSum class. It should support the following operations:add and find.  add - Add the number to an internal data structure. find - Find if there exists any pair of numbers which">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-17T12:28:17.000Z">
+<meta property="og:updated_time" content="2018-09-17T12:53:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode__170 Two Sum III">
-<meta name="twitter:description" content="LeetCode__170 Two Sum IIIDesign and implement a TwoSum class. It should support the following operations:add and find.  add - Add the number to an internal data structure. find - Find if there exists">
+<meta name="twitter:description" content="Design and implement a TwoSum class. It should support the following operations:add and find.  add - Add the number to an internal data structure. find - Find if there exists any pair of numbers which">
 
 
 
@@ -333,7 +333,7 @@
       
 
       
-        <h1 id="LeetCode-170-Two-Sum-III"><a href="#LeetCode-170-Two-Sum-III" class="headerlink" title="LeetCode__170 Two Sum III"></a>LeetCode__170 Two Sum III</h1><p>Design and implement a TwoSum class. It should support the following operations:add and find.</p>
+        <p>Design and implement a TwoSum class. It should support the following operations:add and find.</p>
 <ul>
 <li>add - Add the number to an internal data structure.</li>
 <li>find - Find if there exists any pair of numbers which sum is equal to the value.</li>
@@ -342,7 +342,8 @@
 <pre><code>find(4) -&gt; true
 
 find(7) -&gt; false
-</code></pre><p><strong>Java Solution:</strong></p>
+</code></pre><a id="more"></a>
+<p><strong>Java Solution:</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TwoSum3</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">        m.put(number, m.getOrDefault(number, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> valueKey : m.keySet()) &#123;</span><br><span class="line">            <span class="keyword">int</span> target = number - valueKey;</span><br><span class="line">            <span class="keyword">if</span>(target == valueKey &amp;&amp; m.get(valueKey) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (target != valueKey &amp;&amp; m.containsKey(target))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> HashMap&lt;Integer, Integer&gt; m = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TwoSum3 twoSum = <span class="keyword">new</span> TwoSum3();</span><br><span class="line">        twoSum.add(<span class="number">1</span>);</span><br><span class="line">        twoSum.add(<span class="number">3</span>);</span><br><span class="line">        twoSum.add(<span class="number">5</span>);</span><br><span class="line">        System.out.println(twoSum.find(<span class="number">4</span>));</span><br><span class="line">        System.out.println(twoSum.find(<span class="number">7</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>把每个数字和其出现的次数建立映射</li>
@@ -439,17 +440,8 @@ find(7) -&gt; false
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -512,22 +504,6 @@ find(7) -&gt; false
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LeetCode-170-Two-Sum-III"><span class="nav-number">1.</span> <span class="nav-text">LeetCode__170 Two Sum III</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -563,7 +539,10 @@ find(7) -&gt; false
 
 
 
-
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">您的朋友小锅已经疯狂码了14.4k字</span>
+</div>
         
 
 

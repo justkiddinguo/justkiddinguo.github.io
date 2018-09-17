@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="LeetCode__205 Isomorphic StringsGiven two strings s and t, determine if they are isomorphic. Two strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character">
+<meta name="description" content="Given two strings s and t, determine if they are isomorphic. Two strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character must be replaced with another ch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode__205 Isomorphic Strings">
 <meta property="og:url" content="justkiddinguo.com/2018/04/03/LeetCode__205 Isomorphic Strings/index.html">
 <meta property="og:site_name" content="右边的小耳朵">
-<meta property="og:description" content="LeetCode__205 Isomorphic StringsGiven two strings s and t, determine if they are isomorphic. Two strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character">
+<meta property="og:description" content="Given two strings s and t, determine if they are isomorphic. Two strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character must be replaced with another ch">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-17T12:29:50.000Z">
+<meta property="og:updated_time" content="2018-09-17T12:48:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode__205 Isomorphic Strings">
-<meta name="twitter:description" content="LeetCode__205 Isomorphic StringsGiven two strings s and t, determine if they are isomorphic. Two strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character">
+<meta name="twitter:description" content="Given two strings s and t, determine if they are isomorphic. Two strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character must be replaced with another ch">
 
 
 
@@ -333,7 +333,7 @@
       
 
       
-        <h1 id="LeetCode-205-Isomorphic-Strings"><a href="#LeetCode-205-Isomorphic-Strings" class="headerlink" title="LeetCode__205 Isomorphic Strings"></a>LeetCode__205 Isomorphic Strings</h1><p>Given two strings <strong>s</strong> and <strong>t</strong>, determine if they are isomorphic.</p>
+        <p>Given two strings <strong>s</strong> and <strong>t</strong>, determine if they are isomorphic.</p>
 <p>Two strings are isomorphic if the characters in <strong>s</strong> can be replaced to get <strong>t</strong>.</p>
 <p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.</p>
 <p><strong>Example 1:</strong></p>
@@ -343,6 +343,7 @@
 <p><strong>Example 3:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;paper&quot;, t = &quot;title&quot;</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
 <p><strong>Note:</strong><br>You may assume both <strong>s</strong> and <strong>t</strong> have the same length.</p>
+<a id="more"></a>
 <p><strong>Java Solution1:</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IsomorphicStrings</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isIsomorphic</span><span class="params">(String s, String t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] m1 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</span><br><span class="line">        <span class="keyword">int</span>[] m2 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</span><br><span class="line">        <span class="keyword">char</span> s_char;</span><br><span class="line">        <span class="keyword">char</span> t_char;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++)&#123;</span><br><span class="line">            s_char = s.charAt(i);</span><br><span class="line">            t_char = t.charAt(i);</span><br><span class="line"><span class="comment">//            System.out.print(s_char+"   ");</span></span><br><span class="line"><span class="comment">//            System.out.println(t_char);</span></span><br><span class="line"><span class="comment">//            System.out.print(m1[s_char]+"   ");</span></span><br><span class="line"><span class="comment">//            System.out.println(m2[t_char]);</span></span><br><span class="line">            <span class="keyword">if</span>(m1[s_char]!=m2[t_char])&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            m1[s_char] = i+<span class="number">1</span>;</span><br><span class="line">            m2[t_char] = i+<span class="number">1</span>;</span><br><span class="line"><span class="comment">//            System.out.print(m1[s_char]+"   ");</span></span><br><span class="line"><span class="comment">//            System.out.println(m2[t_char]);</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> b = isIsomorphic(<span class="string">"abcc"</span>,<span class="string">"cdad"</span>);</span><br><span class="line">        System.out.println(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -446,17 +447,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -519,22 +511,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LeetCode-205-Isomorphic-Strings"><span class="nav-number">1.</span> <span class="nav-text">LeetCode__205 Isomorphic Strings</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -570,7 +546,10 @@
 
 
 
-
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">您的朋友小锅已经疯狂码了14.4k字</span>
+</div>
         
 
 

@@ -81,21 +81,21 @@
 
 
 
-<meta name="description" content="Hibernate_day02回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件 ​    编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态 Hibernate的一级缓存 Hibernate操作持久化对象的方法 Hibernate的基本查询   Hibernate的持久">
+<meta name="description" content="回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序：编写映射的配置文件、编写核心的配置文件、编写程序  配置的文件  使用的接口和方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hibernate_day02">
 <meta property="og:url" content="justkiddinguo.com/2018/03/29/Hibernate_day02/index.html">
 <meta property="og:site_name" content="右边的小耳朵">
-<meta property="og:description" content="Hibernate_day02回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件 ​    编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态 Hibernate的一级缓存 Hibernate操作持久化对象的方法 Hibernate的基本查询   Hibernate的持久">
+<meta property="og:description" content="回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序：编写映射的配置文件、编写核心的配置文件、编写程序  配置的文件  使用的接口和方法">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="file:///C:/Users/CY/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png">
 <meta property="og:image" content="c:/Users/CY/AppData/Local/Temp/1536895433103.png">
 <meta property="og:image" content="justkiddinguo.com/2018/03/29/Hibernate_day02/图片/02-Session的快照机制.bmp">
 <meta property="og:image" content="justkiddinguo.com/2018/03/29/Hibernate_day02/图片/03-丢失更新.bmp">
-<meta property="og:updated_time" content="2018-09-17T12:29:53.000Z">
+<meta property="og:updated_time" content="2018-09-17T13:09:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hibernate_day02">
-<meta name="twitter:description" content="Hibernate_day02回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件 ​    编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态 Hibernate的一级缓存 Hibernate操作持久化对象的方法 Hibernate的基本查询   Hibernate的持久">
+<meta name="twitter:description" content="回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序：编写映射的配置文件、编写核心的配置文件、编写程序  配置的文件  使用的接口和方法">
 <meta name="twitter:image" content="file:///C:/Users/CY/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png">
 
 
@@ -339,14 +339,11 @@
 
       
         <hr>
-<h1 id="Hibernate-day02"><a href="#Hibernate-day02" class="headerlink" title="Hibernate_day02"></a>Hibernate_day02</h1><p><strong>回顾上一章的内容：</strong></p>
+<p><strong>回顾上一章的内容：</strong></p>
 <ul>
 <li><p>Hibernate框架的概述：ORM</p>
 </li>
-<li><p>框架的入门的程序</p>
-<p>​    编写映射的配置文件</p>
-<pre><code>编写核心的配置文件
-</code></pre><p>​    编写程序</p>
+<li><p>框架的入门的程序：编写映射的配置文件、编写核心的配置文件、编写程序</p>
 </li>
 <li><p>配置的文件</p>
 </li>
@@ -354,6 +351,7 @@
 </li>
 </ul>
 <hr>
+<a id="more"></a>
 <p><strong>本章内容：</strong></p>
 <ul>
 <li>Hibernate持久化对象的状态</li>
@@ -859,7 +857,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate-day02"><span class="nav-number">1.</span> <span class="nav-text">Hibernate_day02</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate的持久化类"><span class="nav-number">1.0.1.</span> <span class="nav-text">Hibernate的持久化类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate持久化对象的状态"><span class="nav-number">1.0.2.</span> <span class="nav-text">Hibernate持久化对象的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate的一级缓存"><span class="nav-number">1.0.3.</span> <span class="nav-text">Hibernate的一级缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate中的事务与并发"><span class="nav-number">1.0.4.</span> <span class="nav-text">Hibernate中的事务与并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate框架的查询方式"><span class="nav-number">1.0.5.</span> <span class="nav-text">Hibernate框架的查询方式</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate的持久化类"><span class="nav-number">1.</span> <span class="nav-text">Hibernate的持久化类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate持久化对象的状态"><span class="nav-number">2.</span> <span class="nav-text">Hibernate持久化对象的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate的一级缓存"><span class="nav-number">3.</span> <span class="nav-text">Hibernate的一级缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate中的事务与并发"><span class="nav-number">4.</span> <span class="nav-text">Hibernate中的事务与并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate框架的查询方式"><span class="nav-number">5.</span> <span class="nav-text">Hibernate框架的查询方式</span></a></li></ol></div>
             
 
           </div>
@@ -901,7 +899,10 @@
 
 
 
-
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">您的朋友小锅已经疯狂码了14.4k字</span>
+</div>
         
 
 
