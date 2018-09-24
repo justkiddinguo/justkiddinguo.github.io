@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "ae429e88"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="右边的小耳朵" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本篇内容 基本类型包装类 System类 Math类 Arrays类 大数运算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java学习日常之不知道什么时候能用上的API">
+<meta property="og:url" content="justkiddinguo.com/2018/03/05/day17/index.html">
+<meta property="og:site_name" content="右边的小耳朵">
+<meta property="og:description" content="本篇内容 基本类型包装类 System类 Math类 Arrays类 大数运算">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-17T13:10:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java学习日常之不知道什么时候能用上的API">
+<meta name="twitter:description" content="本篇内容 基本类型包装类 System类 Math类 Arrays类 大数运算">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="justkiddinguo.com/2018/03/05/day17/"/>
+
+
+
+
+
+  <title>Java学习日常之不知道什么时候能用上的API | 右边的小耳朵</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">右边的小耳朵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">With luck,forward.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/03/05/day17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java学习日常之不知道什么时候能用上的API</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T01:12:57+08:00">
+                2018-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-API/" itemprop="url" rel="index">
+                    <span itemprop="name">Java API</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/05/day17/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/05/day17/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="本篇内容"><a href="#本篇内容" class="headerlink" title="本篇内容"></a>本篇内容</h2><ul>
+<li>基本类型包装类</li>
+<li>System类</li>
+<li>Math类</li>
+<li>Arrays类</li>
+<li>大数运算</li>
+</ul>
+<a id="more"></a>
+<h3 id="1-基本数据类型对象包装类概述"><a href="#1-基本数据类型对象包装类概述" class="headerlink" title="1.基本数据类型对象包装类概述"></a>1.基本数据类型对象包装类概述</h3><h4 id="A-基本类型包装类的产生"><a href="#A-基本类型包装类的产生" class="headerlink" title="A.基本类型包装类的产生"></a>A.基本类型包装类的产生</h4><p>在实际程序使用中，程序界面上用户输入的数据都是以<strong>字符串类型</strong>进行存储的。而程序开发中，我们需要把字符串数据，根据需求转换成指定的<strong>基本数据类型</strong>，如年龄需要转换成int类型，考试成绩需要转换成double类型等。</p>
+<h4 id="B-八种基本类型对应的包装类（int—-gt-Integer）"><a href="#B-八种基本类型对应的包装类（int—-gt-Integer）" class="headerlink" title="B.八种基本类型对应的包装类（int—&gt;Integer）"></a>B.八种基本类型对应的包装类（<strong>int—&gt;Integer</strong>）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>    Character</span><br><span class="line"><span class="keyword">int</span>     Integer</span><br><span class="line"><span class="keyword">byte</span>    Byte</span><br><span class="line"><span class="keyword">short</span>   Short</span><br><span class="line"><span class="keyword">long</span>    Long</span><br><span class="line"><span class="keyword">float</span>   Float</span><br><span class="line"><span class="keyword">double</span>  Double</span><br><span class="line"><span class="keyword">boolean</span> Boolean</span><br></pre></td></tr></table></figure>
+<h3 id="2-Integer类parseInt方法"><a href="#2-Integer类parseInt方法" class="headerlink" title="2.Integer类parseInt方法"></a>2.Integer类parseInt方法</h3><p>将字符串转换为基本数据类型int</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  *A:Integer类parseInt方法:</span><br><span class="line">   *a:parseInt()</span><br><span class="line">    <span class="keyword">int</span> i = Integer.parseInt(<span class="string">"12"</span>);</span><br><span class="line">    System.out.println(i/<span class="number">2</span>);<span class="comment">//6</span></span><br><span class="line"> </span><br><span class="line">*b:parseInt(String s, <span class="keyword">int</span> radix)</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment"> 	 * Integer类静态方法parseInt(String s, int radix)</span></span><br><span class="line"><span class="comment"> 	 * radix基数,进制</span></span><br><span class="line"><span class="comment"> 	 * 2的含义：前面的数字是二进制的,但是方法parseInt运行结果都是十进制</span></span><br><span class="line"><span class="comment"> 	 * 指定进制的字符串转换为十进制的整数</span></span><br><span class="line"><span class="comment"> 	 */</span></span><br><span class="line"> 	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line"> 		<span class="keyword">int</span> i = Integer.parseInt(<span class="string">"110"</span>, <span class="number">2</span>);</span><br><span class="line"> 		System.out.println(i);<span class="comment">//6</span></span><br><span class="line"> 	&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-Integer类int转成字符串"><a href="#3-Integer类int转成字符串" class="headerlink" title="3.Integer类int转成字符串"></a>3.Integer类int转成字符串</h3><p>使用”+”与字符串拼接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">*A:Integer类<span class="keyword">int</span>转成字符串:</span><br><span class="line">   *a:使用<span class="string">"+"</span>与字符串拼接</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">3</span>;</span><br><span class="line">      	String s = i+<span class="string">""</span>;</span><br><span class="line">      	System.out.println(s+<span class="number">1</span>);<span class="comment">//"31"</span></span><br><span class="line">  </span><br><span class="line">   *b:toString(<span class="keyword">int</span> ,<span class="keyword">int</span> 进制),任意进制整数转成任意进制的字符串 (了解)</span><br><span class="line">      	String s1 = Integer.toString(<span class="number">5</span>,<span class="number">2</span>);</span><br><span class="line">      	System.out.println(s1);</span><br></pre></td></tr></table></figure>
+<h3 id="4-Integer类构造方法"><a href="#4-Integer类构造方法" class="headerlink" title="4.Integer类构造方法"></a>4.Integer类构造方法</h3><p>intValue()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">*A:Integer类构造方法</span><br><span class="line">   <span class="comment">/*</span></span><br><span class="line"><span class="comment">    *   Integer类构造方法</span></span><br><span class="line"><span class="comment">    *   Integer (String s)</span></span><br><span class="line"><span class="comment">    *   将数字格式的字符串,传递到Integer类的构造方法中</span></span><br><span class="line"><span class="comment">    *   创建Integer对象,包装的是一个字符串</span></span><br><span class="line"><span class="comment">    *   将构造方法中的字符串,转成基本数据类型,调用方法为非静态的intValue()</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_3</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	Integer in = <span class="keyword">new</span> Integer(<span class="string">"100"</span>);</span><br><span class="line">   	<span class="keyword">int</span> i = in.intValue();</span><br><span class="line">   	System.out.println(--i);<span class="comment">//99</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-Integer类其他方法"><a href="#5-Integer类其他方法" class="headerlink" title="5.Integer类其他方法"></a>5.Integer类其他方法</h3><p>  Integer类其他方法：包括三个方法和两个静态成员变量<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/*</span></span><br><span class="line"><span class="comment">* Integer类的3个静态方法</span></span><br><span class="line"><span class="comment">* 做进制的转换</span></span><br><span class="line"><span class="comment">* 十进制转成二进制  toBinarString(int)</span></span><br><span class="line"><span class="comment">* 十进制转成八进制  toOctalString(int)</span></span><br><span class="line"><span class="comment">* 十进制转成十六进制 toHexString(int)</span></span><br><span class="line"><span class="comment">* 三个方法返回值都是以String形式出现</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    a:十进制转二,八,十六进制</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line">      		System.out.println(Integer.toBinaryString(<span class="number">99</span>));</span><br><span class="line">      		System.out.println(Integer.toOctalString(<span class="number">99</span>));</span><br><span class="line">      		System.out.println(Integer.toHexString(<span class="number">999</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    b:获取<span class="keyword">int</span>的最大值和最小值</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *   Integer类的静态成员变量</span></span><br><span class="line"><span class="comment">     *   MAX_VALUE</span></span><br><span class="line"><span class="comment">     *   MIN_VALUE</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	System.out.println(Integer.MAX_VALUE);<span class="comment">//2147483647</span></span><br><span class="line">    	System.out.println(Integer.MIN_VALUE);<span class="comment">//-2147483648</span></span><br><span class="line">      System.out.println(Long.MIN_VALUE);</span><br><span class="line">      System.out.println(Double.MAX_VALUE);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-自动装箱和自动拆箱"><a href="#6-自动装箱和自动拆箱" class="headerlink" title="6.自动装箱和自动拆箱"></a>6.自动装箱和自动拆箱</h3><p>⚠️引用类型，引用变量一定指向对象</p>
+<p>⚠️在含有算术运算的时候，会进行自动拆箱的操作。装箱操作会创建对象，频繁的装箱操作会消耗许多内存，影响性能，所以可以避免装箱的时候应该尽量避免。</p>
+<p>JDK1.5新特性，自动装箱：基本数据类型直接变成对象；自动拆箱：对象中的数据变为基本数据类型。<br>自动装箱拆箱的好处: 基本类型和引用类直接运算<br>自动装箱:使用Integer.valueOf(整数值)返回一个封装了该整数值的Integer对象<br>自动拆箱:使用Integer对象.intValue()返回Integer对象中封装的整数值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//引用类型，引用变量一定指向对象</span></span><br><span class="line">	<span class="comment">//自动装箱，将基本数据类型“1”直接变成了对象</span></span><br><span class="line">    ArrayList&lt;Integer&gt; ar = <span class="keyword">new</span> ArrayList&lt;Integer&gt;;</span><br><span class="line">    ar.add(<span class="number">1</span>);<span class="comment">//此处将1自动装箱为Integer</span></span><br><span class="line">	Integer in = <span class="number">1</span>; <span class="comment">// Integer in = new Integer（1）；</span></span><br><span class="line">                    <span class="comment">// Integer in = Integer.valueOf(1)；</span></span><br><span class="line">	<span class="comment">//in 是引用类型,不能和基本类型放在一起运算运算, 自动拆箱将引用类型in转换为基本类型</span></span><br><span class="line">	<span class="comment">//in+1相当于是in.inValue()+1 = 2    </span></span><br><span class="line">	<span class="comment">//in = 2实际上是自动装箱操作</span></span><br><span class="line">	in = in + <span class="number">1</span>;</span><br><span class="line">	System.out.println(in);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>弊端：没有指向对象时会报空指针异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Integer in = <span class="keyword">null</span>;</span><br><span class="line">  <span class="comment">//in = null.intValue()+1 但空指针不能调用，会报空指针异常。需要添加判断if（in != null）</span></span><br><span class="line">  in = in + <span class="number">1</span>;</span><br><span class="line">  system.out.println(in);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="7-自动装箱和自动拆箱练习题"><a href="#7-自动装箱和自动拆箱练习题" class="headerlink" title="7.自动装箱和自动拆箱练习题"></a>7.自动装箱和自动拆箱练习题</h3><ul>
+<li>“==”：如果是基本数据类型，则直接对值进行比较，如果是引用数据类型，则是对他们的地址进行比较（但是只能比较相同类型的对象，或者比较父类对象和子类对象。类型不同的两个对象不能使用==进行比较）。</li>
+<li>equals方法继承自Object类，在具体实现时可以覆盖父类中的实现。看一下Object中qeuals的源码发现，它的实现也是对对象的地址进行比较，此时它和”==”的作用相同。而JDK类中有一些类覆盖了Object类的equals()方法，比较规则为：如果两个对象的类型一致，并且内容一致，则返回true,这些类有：<strong>java.io.file,java.util.Date,java.lang.string，包装类（Integer,Double等）。</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  Integer i = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">Integer j = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">System.out.println(i==j);<span class="comment">// false；“==”两边如果是引用类型的话比较的就是对象地址</span></span><br><span class="line">System.out.println(i.equals(j));<span class="comment">// true；Integer的equals()方法继承Object已经重写过了，比较的是对象数据</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数据在byte(-128~127)范围内,JVM为了节约内存不会重新new对象。</span></span><br><span class="line"><span class="comment">//Integer使用一个内部静态类中的一个静态数组保存了-128-127范围内的数据，静态数组在类加载以后是存在方法区的，并非常量池。在自动装箱的时候，首先判断要装箱的数字的范围，如果在-128-127的范围则直接返回缓存中已有的对象，否则new一个新的对象。</span></span><br><span class="line"> 	Integer aa = <span class="number">127</span>; <span class="comment">// Integer aa = new Integer(127)</span></span><br><span class="line"> 	Integer bb = <span class="number">127</span>; <span class="comment">// Integer bb = aa;</span></span><br><span class="line"> 	System.out.println(aa==bb); <span class="comment">//true</span></span><br><span class="line"> 	System.out.println(aa.equals(bb));<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  Integer a = <span class="number">500</span>;<span class="comment">//Integer a = new Integer(500);</span></span><br><span class="line">                <span class="comment">//Integer a = Integer.valueOf(500);</span></span><br><span class="line">Integer b = <span class="number">500</span>;</span><br><span class="line">System.out.println(a==b);<span class="comment">//装箱了，超出缓存对象的范围，都是new的新的对象，false</span></span><br><span class="line">System.out.println(a.equals(b));<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/dawn_after_dark/article/details/74154338" target="_blank" rel="noopener">这里还有一道很好的题～</a></p>
+<p>###8.System类方法currentTimeMillis </p>
+<p>​      System类包含一些有用的类字段和方法，它不能被实例化，不能手动创建对象，因为构造方法被private修饰，以阻止外界创建对象。类中的都是static方法，直接使用<strong>静态类名调用</strong>即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  获取系统当前毫秒值</span></span><br><span class="line"><span class="comment"> *  static long currentTimeMillis()</span></span><br><span class="line"><span class="comment"> *  对程序执行时间进行测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> start = System.currentTimeMillis();<span class="comment">//当前时间x-1970年1月1日零时零分零秒</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10000</span>; i++)&#123;</span><br><span class="line">		System.out.println(i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">long</span> end = System.currentTimeMillis();<span class="comment">//当前时间y-1970年1月1日零时零分零秒</span></span><br><span class="line">	System.out.println(end - start);<span class="comment">//当前时间y-当前时间x </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="9-System类方法exit"><a href="#9-System类方法exit" class="headerlink" title="9.System类方法exit"></a>9.System类方法exit</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  System类方法exit()方法</span></span><br><span class="line"><span class="comment"> *  退出虚拟机,所有程序全停止</span></span><br><span class="line"><span class="comment"> *  static void exit(0)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">		System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">		System.exit(<span class="number">0</span>);<span class="comment">//该方法会在finally代码块中使用</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="10-System类方法gc"><a href="#10-System类方法gc" class="headerlink" title="10.System类方法gc"></a>10.System类方法gc</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span></span>&#123;</span><br><span class="line">  		System.out.println(<span class="string">"垃圾已收取"</span>);</span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  JVM在内存中收取对象的垃圾</span></span><br><span class="line"><span class="comment"> *  当没有更多引用指向该对象时,JVM会自动调用垃圾回收机制回收堆中的对象</span></span><br><span class="line"><span class="comment"> *  同时调用回收对象所属类的finalize方法()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_2</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">new</span> Person();</span><br><span class="line">	System.gc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="11-System类方法getProperties"><a href="#11-System类方法getProperties" class="headerlink" title="11.System类方法getProperties"></a>11.System类方法getProperties</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  获取当前操作系统的属性，例如操作系统名称等</span></span><br><span class="line"><span class="comment"> *  static Properties getProperties()，Properties是一个类。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_3</span><span class="params">()</span></span>&#123;</span><br><span class="line">	System.out.println( System.getProperties() );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="12-System类方法arraycopy"><a href="#12-System类方法arraycopy" class="headerlink" title="12.System类方法arraycopy"></a>12.System类方法arraycopy</h3><p>​        arraycopy是调用操作系统实现的本地方法（native），运行时走本地方法栈。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * System类方法,复制数组</span></span><br><span class="line"><span class="comment"> * arraycopy(Object src, int srcPos, Object dest, int destPos, int length)</span></span><br><span class="line"><span class="comment"> * Object src, 要复制的源数组</span></span><br><span class="line"><span class="comment"> * int srcPos, 数组源的起始索引</span></span><br><span class="line"><span class="comment"> * Object dest,复制后的目标数组</span></span><br><span class="line"><span class="comment"> * int destPos,目标数组起始索引 </span></span><br><span class="line"><span class="comment"> * int length, 复制几个</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_4</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span>[] src = &#123;<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">44</span>,<span class="number">55</span>,<span class="number">66</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span>[] desc = &#123;<span class="number">77</span>,<span class="number">88</span>,<span class="number">99</span>,<span class="number">0</span>&#125;;</span><br><span class="line">	System.arraycopy(src, <span class="number">1</span>, desc, <span class="number">1</span>, <span class="number">2</span>);<span class="comment">//将src数组的1位置开始(包含1位置)的两个元素,拷贝到desc的1,2位置上</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;  i &lt; desc.length ; i++)&#123;</span><br><span class="line">		System.out.println(desc[i]);<span class="comment">//77 22 33 0</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="13-Math类的方法-1"><a href="#13-Math类的方法-1" class="headerlink" title="13.Math类的方法_1"></a>13.Math类的方法_1</h3><p>​        Math 类是包含用于执行基本数学运算的方法的数学工具类，如初等指数、对数、平方根和三角函数。类似这样的<strong>工具类</strong>，其所有方法均为<strong>静态方法</strong>，并且一般不会创建对象。如System类工具类，代表能够完成一系列功能的类，在使用它们时不用创建对象，该类中方法为静态方法。</p>
+<p>​        <strong>工具类</strong>，代表能够完成一系列功能的类，在使用它们时，不用创建对象，该类中方法为静态方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * static double sqrt(double d)</span></span><br><span class="line"><span class="comment"> * 返回参数的平方根</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_4</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> d = Math.sqrt(<span class="number">2</span>);<span class="comment">//注意：负数没有平方根，结果为NaN。</span></span><br><span class="line">	System.out.println(d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * static double pow(double a, double b)</span></span><br><span class="line"><span class="comment"> * a的b次方</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_3</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> d = Math.pow(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">	System.out.println(d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * static double floor(double d)</span></span><br><span class="line"><span class="comment"> * 返回小于或者等于参数d的最大整数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_2</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> d = Math.floor(<span class="number">1.5</span>);</span><br><span class="line">	System.out.println(d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  static double ceil(double d)</span></span><br><span class="line"><span class="comment"> *  返回大于或者等于参数d的最小整数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> d = Math.ceil(<span class="number">5.1</span>);</span><br><span class="line">	System.out.println(d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  static int abs(int i)</span></span><br><span class="line"><span class="comment"> *  获取参数的绝对值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = Math.abs(<span class="number">0</span>);</span><br><span class="line">	System.out.println(i);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="14-Math类的方法-2"><a href="#14-Math类的方法-2" class="headerlink" title="14.Math类的方法_2"></a>14.Math类的方法_2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * static double round(doubl d)</span></span><br><span class="line"><span class="comment"> * 获取参数的四舍五入,取整数</span></span><br><span class="line"><span class="comment"> * 方法：加0.5取整即可</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_6</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	<span class="keyword">double</span> d = Math.round(<span class="number">5.4195</span>);</span><br><span class="line">   	System.out.println(d);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">  * static double random() 返回随机数 0.0-1.0之间</span></span><br><span class="line"><span class="comment">  * 其来源也是Random类（推荐用Random类，其返回结果是整数）</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span> ;i++)&#123;</span><br><span class="line">       <span class="keyword">double</span> d = Math.random();</span><br><span class="line">       System.out.println(d);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="15-Arrays工具类"><a href="#15-Arrays工具类" class="headerlink" title="15.Arrays工具类"></a>15.Arrays工具类</h3><p>​        Java.utils.Arrays此类包含用来操作数组（比如排序和搜索）的各种方法。需要注意，如果指定数组引用为 null，则访问此类中的方法都会抛出空指针异常NullPointerException。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArraysDemo</span> </span>&#123;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *  static String toString(数组)</span></span><br><span class="line"><span class="comment">	 *  将数组变成字符串</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_2</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span>[] arr = &#123;<span class="number">5</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">		String s = Arrays.toString(arr);</span><br><span class="line">		System.out.println(s);<span class="comment">//[5,1,4,6,8,9,0]</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *  static int binarySearch(数组, 被查找的元素)</span></span><br><span class="line"><span class="comment">	 *  数组的二分搜索法</span></span><br><span class="line"><span class="comment">	 *  返回元素在数组中出现的索引</span></span><br><span class="line"><span class="comment">	 *  元素不存在, 返回的是(-插入点-1),保证返回值是负数（最大是负一）</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">11</span>,<span class="number">15</span>,<span class="number">18</span>&#125;;</span><br><span class="line">	    <span class="keyword">int</span> index =  Arrays.binarySearch(arr, <span class="number">10</span>);</span><br><span class="line">	    System.out.println(index);<span class="comment">//-4-1=-5</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *  static void sort(数组)</span></span><br><span class="line"><span class="comment">	 *  对数组升序排列</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">int</span>[] arr = &#123;<span class="number">5</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">0</span>&#125;;</span><br><span class="line">		Arrays.sort(arr);<span class="comment">//快排，nlog(n)</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">			System.out.println(arr[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="16-数组复制练习"><a href="#16-数组复制练习" class="headerlink" title="16.数组复制练习"></a>16.数组复制练习</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *  定义方法,接收输入,存储的是10个人考试成绩</span></span><br><span class="line"><span class="comment"> *  将最后三个人的成绩,存储到新的数组中,返回新的数组</span></span><br><span class="line"><span class="comment"> */</span>	</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	function_2();</span><br><span class="line">	<span class="keyword">int</span>[] arr = &#123;<span class="number">56</span>,<span class="number">65</span>,<span class="number">11</span>,<span class="number">98</span>,<span class="number">57</span>,<span class="number">43</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">100</span>,<span class="number">200</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span>[] newArray = test(arr);</span><br><span class="line">	System.out.println(Arrays.toString(newArray));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] test(<span class="keyword">int</span>[] arr)&#123;</span><br><span class="line">	<span class="comment">//对数组排序</span></span><br><span class="line">	Arrays.sort(arr);</span><br><span class="line">	<span class="comment">//将最后三个成绩存储到新的数组中</span></span><br><span class="line">	<span class="keyword">int</span>[] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">	<span class="comment">//成绩数组的最后三个元素,复制到新数组中</span></span><br><span class="line">    <span class="comment">//	System.arraycopy(arr, 0, result, 0, 3);</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;  i &lt; <span class="number">3</span> ;i++)&#123;</span><br><span class="line">		result[i] = arr[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="17-BigInteger类概述和构造方法"><a href="#17-BigInteger类概述和构造方法" class="headerlink" title="17.BigInteger类概述和构造方法"></a>17.BigInteger类概述和构造方法</h3><p>​        在Java中超过long型的整数已经不能被称为整数了,它们被封装成BigInteger对象。在BigInteger类中,四则运算都是利用方法来实现,并不是采用运算符。</p>
+<p>​        推荐使用构造方法:BigInteger(String val)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment">  * 传递字符串,要求数字格式,没有长度限制</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">	BigInteger b = <span class="keyword">new</span> BigInteger(<span class="string">"8465846668464684562385634168451684568645684564564"</span>);</span><br><span class="line">	System.out.println(b);</span><br><span class="line">	BigInteger b1 = <span class="keyword">new</span> BigInteger(<span class="string">"5861694569514568465846668468645684564564"</span>);</span><br><span class="line">	System.out.println(b1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="18-BigInteger类四则运算"><a href="#18-BigInteger类四则运算" class="headerlink" title="18.BigInteger类四则运算"></a>18.BigInteger类四则运算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * BigInteger对象的四则运算</span></span><br><span class="line"><span class="comment"> * 调用方法计算,计算结果也只能是BigInteger对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	 BigInteger b1 = <span class="keyword">new</span> BigInteger(<span class="string">"5665464516451051581613661405146"</span>);</span><br><span class="line">	 BigInteger b2 = <span class="keyword">new</span> BigInteger(<span class="string">"965855861461465516451051581613661405146"</span>);</span><br><span class="line">	 </span><br><span class="line">	 <span class="comment">//计算 b1+b2对象的和,调用方法 add</span></span><br><span class="line">	 BigInteger bigAdd = b1.add(b2);<span class="comment">//965855867126930032902103163227322810292</span></span><br><span class="line">	 System.out.println(bigAdd);</span><br><span class="line">	 </span><br><span class="line">	 <span class="comment">//计算b1-b2对象的差,调用方法subtract</span></span><br><span class="line">	 BigInteger bigSub = b1.subtract(b2);</span><br><span class="line">	 System.out.println(bigSub);</span><br><span class="line">	 </span><br><span class="line">	 <span class="comment">//计算b1*b2对象的乘积,调用方法multiply</span></span><br><span class="line">	 BigInteger bigMul = b1.multiply(b2);</span><br><span class="line">	 System.out.println(bigMul);</span><br><span class="line">	 </span><br><span class="line">	 <span class="comment">//计算b2/b1对象商,调用方法divied</span></span><br><span class="line">	 BigInteger bigDiv = b2.divide(b1);</span><br><span class="line">	 System.out.println(bigDiv);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="19-BigDemical应用场景"><a href="#19-BigDemical应用场景" class="headerlink" title="19.BigDemical应用场景"></a>19.BigDemical应用场景</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 计算结果未知</span></span><br><span class="line"><span class="comment"> * 原因: 计算机二进制中,表示浮点数不精确</span></span><br><span class="line"><span class="comment"> * 针对超级大型的浮点数据,为了提供高精度的浮点运算, 需要使用BigDecimal类。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">   System.out.println(<span class="number">0.09</span> + <span class="number">0.01</span>);<span class="comment">//0.09999999999999999</span></span><br><span class="line">   System.out.println(<span class="number">1.0</span> - <span class="number">0.32</span>);<span class="comment">//0.6799999999999999</span></span><br><span class="line">   System.out.println(<span class="number">1.015</span> * <span class="number">100</span>);<span class="comment">//101.49999999999999</span></span><br><span class="line">   System.out.println(<span class="number">1.301</span> / <span class="number">100</span>);<span class="comment">//0.013009999999999999</span></span><br></pre></td></tr></table></figure>
+<h3 id="20-BigDecimal类实现加法减法乘法"><a href="#20-BigDecimal类实现加法减法乘法" class="headerlink" title="20.BigDecimal类实现加法减法乘法"></a>20.BigDecimal类实现加法减法乘法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * BigDecimal实现三则运算，必须传string，才可能预知结果。</span></span><br><span class="line"><span class="comment"> *  + - *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">	BigDecimal b1 =  <span class="keyword">new</span> BigDecimal(<span class="string">"0.09"</span>);</span><br><span class="line">	BigDecimal b2 =  <span class="keyword">new</span> BigDecimal(<span class="string">"0.01"</span>);</span><br><span class="line">	<span class="comment">//计算b1+b2的和,调用方法add</span></span><br><span class="line">	BigDecimal bigAdd = b1.add(b2);</span><br><span class="line">	System.out.println(bigAdd);</span><br><span class="line">	</span><br><span class="line">	BigDecimal b3 = <span class="keyword">new</span> BigDecimal(<span class="string">"1"</span>);</span><br><span class="line">	BigDecimal b4 = <span class="keyword">new</span> BigDecimal(<span class="string">"0.32"</span>);</span><br><span class="line">	<span class="comment">//计算b3-b2的差,调用方法subtract</span></span><br><span class="line">	BigDecimal bigSub = b3.subtract(b4);</span><br><span class="line">	System.out.println(bigSub);</span><br><span class="line">	</span><br><span class="line">	BigDecimal b5 = <span class="keyword">new</span> BigDecimal(<span class="string">"1.015"</span>);</span><br><span class="line">	BigDecimal b6 = <span class="keyword">new</span> BigDecimal(<span class="string">"100"</span>);</span><br><span class="line">	<span class="comment">//计算b5*b6的成绩,调用方法 multiply</span></span><br><span class="line">	BigDecimal bigMul = b5.multiply(b6);</span><br><span class="line">	System.out.println(bigMul);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="21-BigDecimal类实现除法"><a href="#21-BigDecimal类实现除法" class="headerlink" title="21.BigDecimal类实现除法"></a>21.BigDecimal类实现除法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * BigDecimal实现除法运算</span></span><br><span class="line"><span class="comment"> * divide(BigDecimal divisor, int scale, int roundingMode) </span></span><br><span class="line"><span class="comment"> * int scale : 保留几位小数</span></span><br><span class="line"><span class="comment"> * int roundingMode : 保留模式</span></span><br><span class="line"><span class="comment"> *   保留模式 阅读API文档</span></span><br><span class="line"><span class="comment"> *   static int ROUND_UP  向上+1</span></span><br><span class="line"><span class="comment"> *   static int ROUND_DOWN 直接舍去</span></span><br><span class="line"><span class="comment"> *   static int ROUND_HALF_UP  &gt;= 0.5 向上+1</span></span><br><span class="line"><span class="comment"> *   static int ROUND_HALF_DOWN   &gt; 0.5 向上+1 ,否则直接舍去</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span>&#123;</span><br><span class="line">	BigDecimal b1 = <span class="keyword">new</span> BigDecimal(<span class="string">"1.0301"</span>);</span><br><span class="line">	BigDecimal b2 = <span class="keyword">new</span> BigDecimal(<span class="string">"100"</span>);</span><br><span class="line">	<span class="comment">//计算b1/b2的商,调用方法divied</span></span><br><span class="line">	BigDecimal bigDiv = b1.divide(b2,<span class="number">2</span>,BigDecimal.ROUND_HALF_UP);<span class="comment">//0.01301</span></span><br><span class="line">	System.out.println(bigDiv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/01/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/27/Hibernate_day01/" rel="prev" title="Hibernate_day01">
+                Hibernate_day01 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Guo Zhangruo" />
+            
+              <p class="site-author-name" itemprop="name">Guo Zhangruo</p>
+              <p class="site-description motion-element" itemprop="description">I solemnly swear that I am up to no good.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本篇内容"><span class="nav-number">1.</span> <span class="nav-text">本篇内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本数据类型对象包装类概述"><span class="nav-number">1.1.</span> <span class="nav-text">1.基本数据类型对象包装类概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-基本类型包装类的产生"><span class="nav-number">1.1.1.</span> <span class="nav-text">A.基本类型包装类的产生</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-八种基本类型对应的包装类（int—-gt-Integer）"><span class="nav-number">1.1.2.</span> <span class="nav-text">B.八种基本类型对应的包装类（int—&gt;Integer）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Integer类parseInt方法"><span class="nav-number">1.2.</span> <span class="nav-text">2.Integer类parseInt方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Integer类int转成字符串"><span class="nav-number">1.3.</span> <span class="nav-text">3.Integer类int转成字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Integer类构造方法"><span class="nav-number">1.4.</span> <span class="nav-text">4.Integer类构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Integer类其他方法"><span class="nav-number">1.5.</span> <span class="nav-text">5.Integer类其他方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-自动装箱和自动拆箱"><span class="nav-number">1.6.</span> <span class="nav-text">6.自动装箱和自动拆箱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-自动装箱和自动拆箱练习题"><span class="nav-number">1.7.</span> <span class="nav-text">7.自动装箱和自动拆箱练习题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-System类方法exit"><span class="nav-number">1.8.</span> <span class="nav-text">9.System类方法exit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-System类方法gc"><span class="nav-number">1.9.</span> <span class="nav-text">10.System类方法gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-System类方法getProperties"><span class="nav-number">1.10.</span> <span class="nav-text">11.System类方法getProperties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-System类方法arraycopy"><span class="nav-number">1.11.</span> <span class="nav-text">12.System类方法arraycopy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-Math类的方法-1"><span class="nav-number">1.12.</span> <span class="nav-text">13.Math类的方法_1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-Math类的方法-2"><span class="nav-number">1.13.</span> <span class="nav-text">14.Math类的方法_2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-Arrays工具类"><span class="nav-number">1.14.</span> <span class="nav-text">15.Arrays工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-数组复制练习"><span class="nav-number">1.15.</span> <span class="nav-text">16.数组复制练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-BigInteger类概述和构造方法"><span class="nav-number">1.16.</span> <span class="nav-text">17.BigInteger类概述和构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-BigInteger类四则运算"><span class="nav-number">1.17.</span> <span class="nav-text">18.BigInteger类四则运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-BigDemical应用场景"><span class="nav-number">1.18.</span> <span class="nav-text">19.BigDemical应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-BigDecimal类实现加法减法乘法"><span class="nav-number">1.19.</span> <span class="nav-text">20.BigDecimal类实现加法减法乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-BigDecimal类实现除法"><span class="nav-number">1.20.</span> <span class="nav-text">21.BigDecimal类实现除法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guo Zhangruo</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">25.2k</span>
+  
+</div>
+
+
+<!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>-->
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">您的朋友小锅已经疯狂码了25.2k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'hKEljbJ2TlAbH8D7m85GccYz-gzGzoHsz',
+        appKey: 'UA7zcEH3MbW6d754VOMxOhHl',
+        placeholder: '诶呀你来看我啦ヾﾉ≧∀≦)',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+    infoEle.childNodes.forEach(function(item) {
+    item.parentNode.removeChild(item);
+  });
+}
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
