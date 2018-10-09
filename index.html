@@ -306,6 +306,1788 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/H2/Hibernate_day02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/H2/Hibernate_day02/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:36:24+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/09/H2/Hibernate_day02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/H2/Hibernate_day02/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Hibernate-02"><a href="#Hibernate-02" class="headerlink" title="Hibernate__02"></a>Hibernate__02</h2><hr>
+<p><strong>回顾上一章的内容：</strong></p>
+<ul>
+<li><p>Hibernate框架的概述：ORM</p>
+</li>
+<li><p>框架的入门的程序</p>
+<p>​    编写映射的配置文件</p>
+<pre><code>编写核心的配置文件
+
+编写程序
+</code></pre></li>
+<li><p>配置的文件</p>
+</li>
+<li><p>使用的接口和方法</p>
+</li>
+</ul>
+<hr>
+<p><strong>本章内容：</strong></p>
+<ul>
+<li><p>Hibernate持久化对象的状态</p>
+</li>
+<li><p>Hibernate的一级缓存</p>
+</li>
+<li><p>Hibernate操作持久化对象的方法</p>
+</li>
+<li><p>Hibernate的基本查询</p>
+<p><img src="/09/H2/Hibernate_day02/F:/桌面\H02.png" alt="H02"></p>
+</li>
+</ul>
+<hr>
+<h3 id="Hibernate的持久化类"><a href="#Hibernate的持久化类" class="headerlink" title="Hibernate的持久化类"></a>Hibernate的持久化类</h3><hr>
+<p><strong>什么是持久化类</strong><br>持久化类:就是一个Java类（编写的JavaBean），这个Java类与表建立了映射关系就可以成为持久化类，它可以new持久化对象。</p>
+<p> <strong>持久化类 = JavaBean + xxx.hbm.xml</strong></p>
+<hr>
+<p><strong>持久化类的编写规则</strong></p>
+<ol>
+<li>提供一个无参数 public访问控制符的构造器    – 底层需要进行反射。</li>
+<li>提供一个标识属性（ 唯一标识OID，编码时配<id></id>标签），映射数据表主键字段 。数据库中通过主键确定对象，Java对象通过地址确定对象，持久化类通过唯一标识OID确定记录。</li>
+<li>所有属性提供public访问控制符的 set或者get 方法。</li>
+<li>标识属性应尽量使用基本数据类型的<strong>包装类型</strong>。</li>
+</ol>
+<hr>
+<p><strong>区分自然主键和代理主键</strong></p>
+<ol>
+<li><p>创建表的时候</p>
+<ul>
+<li>自然主键:对象本身的一个属性，充当主键的字段本身具有一定的含义，如创建一个人员表,每个人都有一个身份证号(唯一)，使用身份证号作为表的主键，即自然主键。（开发中不会使用这种方式）</li>
+<li>代理主键:不是对象本身的一个属性，充当主键的字段本身不具有业务意义，只具有主键作用，比如自动增长的ID。创建一个人员表,为每个人员单独创建一个字段并用这个字段作为主键，称为代理主键。（开发中推荐使用这种方式）</li>
+</ul>
+</li>
+<li><p>创建表的时候尽量使用<strong>代理主键</strong>创建表。</p>
+</li>
+</ol>
+<hr>
+<p><strong>主键的生成策略</strong></p>
+<ol>
+<li><p>increment:适用于short,int,long作为主键.不是使用的数据库自动增长机制。</p>
+<ul>
+<li><p>Hibernate中提供的一种增长机制.</p>
+<ul>
+<li>先进行查询:select max(id) from user;</li>
+<li>再进行插入:获得最大值+1作为新的记录的主键.</li>
+</ul>
+</li>
+<li><p>问题:不能在集群环境下或者有并发访问的情况下使用。</p>
+</li>
+</ul>
+</li>
+<li><p>identity:适用于short,int,long作为主键。但是这个必须搭配有自动增长的数据库，采用的是数据库底层的自动增长机制。</p>
+<ul>
+<li>底层使用的是数据库的自动增长(auto_increment)：像Oracle数据库没有自动增长，则不能使用。</li>
+</ul>
+</li>
+<li><p>sequence:适用于short,int,long作为主键，底层使用的是序列的增长方式。</p>
+<ul>
+<li>Oracle数据库底层没有自动增长,想自动增长需要使用序列，写一个序列函数。</li>
+</ul>
+</li>
+<li><p><strong>uuid:</strong>适用于char,varchar类型的作为主键。</p>
+<ul>
+<li>使用随机的字符串作为主键。</li>
+</ul>
+</li>
+<li><p><strong>native:本地策略</strong>：根据底层的数据库不同,自动选择适用于该种数据库的生成策略(short,int,long)。</p>
+<ul>
+<li>如果底层使用的MySQL数据库:相当于identity；</li>
+<li>如果底层使用Oracle数据库:相当于sequence。</li>
+</ul>
+</li>
+<li><p>assigned:主键的生成不用Hibernate管理了，必须手动设置主键。</p>
+</li>
+</ol>
+<hr>
+<h3 id="Hibernate持久化对象的状态"><a href="#Hibernate持久化对象的状态" class="headerlink" title="Hibernate持久化对象的状态"></a>Hibernate持久化对象的状态</h3><hr>
+<p><strong>持久化对象的状态</strong></p>
+<ol>
+<li><p>Hibernate的持久化类</p>
+<p>持久化类:Java类与数据库的某个表建立了映射关系.这个类就称为是持久化类。</p>
+<p>持久化类 = Java类 + hbm的配置文件。</p>
+</li>
+<li><p>Hibernate的持久化类的状态</p>
+<p>Hibernate为了管理持久化类：将持久化类分成了三个状态</p>
+<ul>
+<li><p>瞬时态:Transient  Object</p>
+<pre><code>没有持久化标识OID, 没有被纳入到Session对象的管理。
+</code></pre></li>
+<li><p><strong>持久态:Persistent Object</strong></p>
+<pre><code>有持久化标识OID,已经被纳入到Session对象的管理。
+
+持久态的对象具有自动更新数据库的能力。
+</code></pre></li>
+<li><p>托管态:Detached Object</p>
+<pre><code>有持久化标识OID,没有被纳入到Session对象的管理。
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 获取session</span></span><br><span class="line">        Session session = HibernateUtils.getSession();</span><br><span class="line">        Transaction tr = session.beginTransaction();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 持久User的对象</span></span><br><span class="line">        <span class="comment">// 瞬时态：没有OID的值，没有被session管理，此时user对象是瞬时态对象</span></span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setName(<span class="string">"cathy"</span>);</span><br><span class="line">        user.setAge(<span class="number">48</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 使用session保存用户</span></span><br><span class="line">       <span class="comment">// user对象中已经存在id的值，默认的情况下，调用save方法会把user对象也保存到session的缓存中</span></span><br><span class="line">        Serializable id = session.save(user);</span><br><span class="line">        System.out.println(<span class="string">"主键的值："</span>+id);</span><br><span class="line">        <span class="comment">// user是持久态对象</span></span><br><span class="line"></span><br><span class="line">        tr.commit();</span><br><span class="line">        <span class="comment">// session销毁，缓存没有了</span></span><br><span class="line">        session.close();</span><br><span class="line">        <span class="comment">// 打印</span></span><br><span class="line">        <span class="comment">// user对象存在id值，但session销毁了，缓存不存在，session不再管理user对象</span></span><br><span class="line">        <span class="comment">// user是托管态的对象</span></span><br><span class="line">        System.out.println(user.getId());</span><br><span class="line">        System.out.println(user.getName());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Hibernate持久化对象的状态的转换</strong></p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image001.png" alt="img">    </p>
+<ol>
+<li><p>瞬时态    – 没有持久化标识OID, 没有被纳入到Session对象的管理</p>
+<ul>
+<li><p>获得瞬时态的对象</p>
+<p>User user = new User()</p>
+</li>
+<li><p>瞬时态对象转换持久态</p>
+<p>save()/saveOrUpdate();</p>
+</li>
+<li><p>瞬时态对象转换成托管态</p>
+<p>user.setId(1)；（不建议使用，主键尽量由Hibernate框架进行管理）</p>
+</li>
+</ul>
+</li>
+<li><p>持久态    – 有持久化标识OID,已经被纳入到Session对象的管理</p>
+<ul>
+<li><p><strong>获得持久态的对象</strong></p>
+<p><strong>get()/load();</strong></p>
+</li>
+<li><p>持久态转换成瞬时态对象</p>
+<p>delete();  （有争议，不建议使用。删除了数据库中的记录，但是源程序还在)</p>
+</li>
+<li><p>持久态对象转成托管态对象</p>
+<p>session的close()/evict()/clear();</p>
+</li>
+</ul>
+</li>
+<li><p>托管态    – 有持久化标识OID,没有被纳入到Session对象的管理</p>
+<ul>
+<li><p>获得托管态对象:不建议直接获得托管态的对象。</p>
+<p>User user = new User();</p>
+<p>user.setId(1);</p>
+</li>
+<li><p>托管态对象转换成持久态对象：不建议使用</p>
+<p>update()/saveOrUpdate()/lock();</p>
+</li>
+<li><p>托管态对象转换成瞬时态对象：不建议使用</p>
+<p>user.setId(null);</p>
+</li>
+</ul>
+<p><strong>注意：持久态对象有自动更新数据库的能力——Session的一级缓存</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">     Session session = HibernateUtils.getSession();</span><br><span class="line">     Transaction tr = session.beginTransaction();</span><br><span class="line">     <span class="comment">//获取到持久态对象，具有自动更新数据库的能力</span></span><br><span class="line">     User user = session.get(User.class,<span class="number">2</span>);<span class="comment">//先通过主键进行查询</span></span><br><span class="line">     System.out.println(user.getName());</span><br><span class="line">     user.setName(<span class="string">"gavin"</span>);</span><br><span class="line">     <span class="comment">//理论上需编写代码：session.update(user);但实际上不需要</span></span><br><span class="line">     tr.commit();</span><br><span class="line">     session.close();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p> <img src="/09/H2/Hibernate_day02/C:/Users\CY\AppData\Local\Temp\1536895433103.png" alt="1536895433103"></p>
+</li>
+</ol>
+<hr>
+<h3 id="Hibernate的一级缓存"><a href="#Hibernate的一级缓存" class="headerlink" title="Hibernate的一级缓存"></a>Hibernate的一级缓存</h3><hr>
+<p><strong>Session对象的一级缓存（重点）</strong></p>
+<ol>
+<li>什么是缓存？</li>
+</ol>
+<p>​         其实就是<strong>一块内存空间</strong>,将数据源（数据库或者文件）中的数据存放到缓存中，再次获取的时候 ,可以直接从缓存中获取，从而提升程序的性能。</p>
+<ol start="2">
+<li><p>Hibernate框架提供了两种缓存</p>
+<ul>
+<li><p>一级缓存：自带的，不可卸载。一级缓存的生命周期与session一致，一级缓存称为session级别的缓存。</p>
+</li>
+<li><p>二级缓存：增强一级缓存，因为一级缓存的生命周期比较短暂，在Session.close()后缓存就被清空。默认没有开启，需要手动配置才可以使用的。二级缓存可以在多个session中共享数据，二级缓存称为是sessionFactory级别的缓存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ProveSessionExist</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">//创建对象</span></span><br><span class="line">    User user=<span class="keyword">new</span> User();</span><br><span class="line">    user.setName(<span class="string">"guo"</span>);</span><br><span class="line">    user.setAge(<span class="number">23</span>);</span><br><span class="line">    <span class="comment">//保存用户，user已经被存入到session的缓存中</span></span><br><span class="line">    Serializable id  = session.save(user);</span><br><span class="line">    System.out.println(id);</span><br><span class="line">    <span class="comment">//获取对象，不会看到SQL语句</span></span><br><span class="line">    User user2 = session.get(User.class,id);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Session对象的缓存概述</p>
+<ul>
+<li>Session接口中,有一系列的java的集合（List）,这些java集合构成了Session级别的缓存(一级缓存)。</li>
+<li>对象存入到一级缓存后，在session结束生命周期之前，它都在session中存放着。</li>
+<li>内存中包含Session实例 –&gt; Session的缓存（一些集合） –&gt; 集合中包含的是缓存对象</li>
+</ul>
+</li>
+<li><p>证明一级缓存的存在，编写查询的代码即可证明</p>
+<ul>
+<li><p>在同一个Session对象中两次查询，第二次查询不会出现SQL语句，可以证明使用了缓存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 创建对象</span></span><br><span class="line">    User user = <span class="keyword">new</span> User();</span><br><span class="line">    user.setName(<span class="string">"haha"</span>);</span><br><span class="line">    user.setAge(<span class="number">20</span>);</span><br><span class="line">    <span class="comment">// 保存用户，user一级存入到session的缓存中</span></span><br><span class="line">    Serializable id = session.save(user);</span><br><span class="line">    System.out.println(id);</span><br><span class="line">    <span class="comment">// 获取对象，不会看到SQL语句</span></span><br><span class="line">    User user2 = session.get(User.class, id);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Hibernate框架是如何做到数据发生变化时进行同步操作的呢？</p>
+<ul>
+<li><p>使用get方法查询User对象</p>
+</li>
+<li><p>然后设置User对象的一个属性，注意：没有做update操作。发现，数据库中的记录也改变了</p>
+</li>
+<li><p>利用快照机制来完成的（SnapShot）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 获取到持久态的对象</span></span><br><span class="line">    User user = session.get(User.class,<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 重新设置新的名称</span></span><br><span class="line">    user.setName(<span class="string">"wang"</span>);</span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/09/H2/Hibernate_day02/./图片/02-Session的快照机制.bmp" alt="">    </p>
+<hr>
+<p><strong>控制Session的一级缓存（了解）</strong></p>
+<p>Session接口中与一级缓存相关的方法</p>
+<ul>
+<li><p>Session.clear()– 清空缓存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line"></span><br><span class="line">    User user1 = session.get(User.class, <span class="number">3</span>);</span><br><span class="line">    System.out.println(user1.getName());</span><br><span class="line">    <span class="comment">// 清空缓存，下行语句再次执行时控制台会有SQL语句输出</span></span><br><span class="line">    session.clear();</span><br><span class="line"></span><br><span class="line">    User user2 = session.get(User.class, <span class="number">3</span>);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Session.evict(Object entity)– 从一级缓存中清除指定的实体对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 最简单的证明，查询两次</span></span><br><span class="line">    User user1 = session.get(User.class, <span class="number">1</span>);</span><br><span class="line">    System.out.println(user1.getName());</span><br><span class="line">    <span class="comment">// 清除user1对象</span></span><br><span class="line">    session.evict(user1);</span><br><span class="line"></span><br><span class="line">    User user2 = session.get(User.class, <span class="number">1</span>);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Session.flush()– 刷新缓存，在tr.commit()之前就进行缓存区域与快照区域之间的比较。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run7</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 获取到持久态的对象</span></span><br><span class="line">    User user = session.get(User.class,<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 重新设置新的名称</span></span><br><span class="line">    user.setName(<span class="string">"gavin"</span>);</span><br><span class="line">    <span class="comment">// 手动刷新缓存</span></span><br><span class="line">    session.flush();</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="Hibernate中的事务与并发"><a href="#Hibernate中的事务与并发" class="headerlink" title="Hibernate中的事务与并发"></a>Hibernate中的事务与并发</h3><hr>
+<p><strong>事务相关的概念</strong></p>
+<ol>
+<li><p>什么是事务</p>
+<ul>
+<li>事务就是逻辑上的<strong>一组操作</strong>，组成事务的各个执行单元，操作要么全都成功，要么全都失败</li>
+<li>转账的例子：转钱：一方扣钱，一方收钱。两个操作组成了一个事情</li>
+</ul>
+</li>
+<li><p>事务的特性</p>
+<ul>
+<li>原子性： 事务不可分割</li>
+<li>一致性：事务执行的前后数据的完整性保持一致</li>
+<li>隔离性：一个事务执行的过程中,不应该受到其他的事务的干扰</li>
+<li>持久性： 事务一旦提交,数据就永久保持到数据库中</li>
+</ul>
+</li>
+<li><p>如果不考虑隔离性:引发一些读的问题</p>
+<ul>
+<li>脏读：一个事务读到了另一个事务未提交的数据。T1 修改了一行数据，然后 T2 在 T1 还未提交修改操作之前读取了被修改的行。如果 T1 回滚了修改操作，那么 T2 读取的数据就可以看作是从未存在过的。</li>
+<li>不可重复读：是指在数据库访问中，一个事务范围内两个相同的查询却返回了不同数据。这是由于查询时系统中其他事务修改的提交而引起的。比如事务T1读取某一数据，事务T2读取并修改了该数据，T1为了对读取值进行检验而再次读取该数据，便得到了不同的结果。只要事务不结束，查询到的结果就应该是一致的</li>
+<li>虚读：如果符合搜索条件的一行数据在后面的读取操作中出现，但该行数据却不属于最初的数据，就会发生这种事件。举例来说：T1 读取满足某种搜索条件的一些行，然后 T2 插入了符合 T1 的搜索条件的一个新行。如果 T1 重新执行产生原来那些行的查询，就会得到不同的行。</li>
+</ul>
+</li>
+<li><p>通过设置数据库的隔离级别来解决上述读的问题</p>
+<ul>
+<li>未提交读:以上的读的问题都有可能发生。</li>
+<li>已提交读:避免脏读，但是不可重复读，虚读都有可能发生。（Oracal）</li>
+<li>可重复读:避免脏读，不可重复读，但是虚读是有可能发生（MySQL默认）。</li>
+<li>串行化:以上读的情况都可以避免。</li>
+</ul>
+</li>
+<li><p>如果想在Hibernate的框架中来设置隔离级别，需要在hibernate.cfg.xml的配置文件中通过标签来配置</p>
+<ul>
+<li>通过：hibernate.connection.isolation = 4 来配置</li>
+<li>取值<ul>
+<li>1—Read uncommitted isolation</li>
+<li>2—Read committed isolation</li>
+<li>4—Repeatable read isolation</li>
+<li>8—Serializable isolation</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>丢失更新的问题</strong></p>
+<ol>
+<li><p>如果不考虑隔离性，也会产生写入数据的问题，这一类的问题叫丢失更新</p>
+<p>的问题</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>例如：两个事务同时对某一条记录做修改，就会引发丢失更新的问题。</p>
+<ul>
+<li>A事务和B事务同时获取到一条数据，同时再做修改</li>
+<li>如果A事务修改完成后，提交了事务</li>
+<li>B事务修改完成后，不管是提交还是回滚或不做处理，都会对数据产生影响</li>
+</ul>
+</li>
+<li><p>解决方案有两种</p>
+<ul>
+<li><p>悲观锁</p>
+<ul>
+<li>采用的是数据库提供的一种锁机制，如果采用做了这种机制，在SQL语句的后面添加 for update 子句</li>
+<li>当A事务在操作该条记录时，会把该条记录锁起来，其他事务是不能操作这条记录的</li>
+<li>只有当A事务提交后，锁释放了，其他事务才能操作该条记录</li>
+</ul>
+</li>
+<li><p>乐观锁</p>
+<ul>
+<li>采用版本号的机制来解决的。会给表结构添加一个字段version=0，默认值是0</li>
+<li>当A事务在操作完该条记录，提交事务时，会先检查版本号，如果发生版本号的值相同时，才可以提交事务。同时会更新版本号version=1.</li>
+<li>当B事务操作完该条记录时，提交事务时，会先检查版本号，如果发现版本不同时，程序会出现错误，会抛出异常需要重新查询。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用Hibernate框架解决丢失更新的问题</p>
+<ul>
+<li><p>悲观锁</p>
+<ul>
+<li>使用session.get(Customer.class, 1,LockMode.UPGRADE); 方法</li>
+</ul>
+</li>
+<li><p>乐观锁</p>
+<ul>
+<li>1.在对应的JavaBean中添加一个属性，名称可以是任意的。例如：private Integer version; 提供get和set方法</li>
+<li>2.在映射的配置文件中，提供 <version name="version">标签即可。</version></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/09/H2/Hibernate_day02/./图片/03-丢失更新.bmp" alt="">    </p>
+<hr>
+<p><strong>绑定本地的Session</strong></p>
+<ol>
+<li><p>之前在讲JavaWEB的事务的时候，需要在业务层使用Connection来开启事务。</p>
+<ul>
+<li><p>一种是通过参数的方式传递下去</p>
+</li>
+<li><p>另一种是把Connection绑定到ThreadLocal对象中，只要是同一个线程，它的Connection就是同一个。</p>
+<p><img src="/09/H2/Hibernate_day02/F:/桌面\Pic1.PNG" alt="Pic1"></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li><p>现在的Hibernate框架中，使用session对象开启事务，所以需要来传递session对象，框架提供了ThreadLocal的方式</p>
+<ul>
+<li><p>需要在hibernate.cfg.xml的配置文件中提供如下配置：</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.current_session_context_class"</span>&gt;</span>thread<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新HibernateUtil的工具类，使用SessionFactory的getCurrentSession()方法，获取当前的Session对象。并且该Session对象不用手动关闭，线程结束了，会自动关闭。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Session <span class="title">getCurrentSession</span><span class="params">()</span></span>&#123;</span><br><span class="line">  		<span class="keyword">return</span> factory.getCurrentSession();</span><br><span class="line">  	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意：想使用getCurrentSession()方法，必须要先配置才能使用。</p>
+<p>  Dao层代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save1</span><span class="params">(User u1)</span></span>&#123;</span><br><span class="line">		Session session = HibernateUtils.getCurrentSession();</span><br><span class="line">		session.save(u1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save2</span><span class="params">(User u2)</span></span>&#123;</span><br><span class="line">		Session session = HibernateUtils.getCurrentSession();</span><br><span class="line">		session.save(u2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  Service层代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(User u1,User u2)</span></span>&#123;</span><br><span class="line">		UserDao dao = <span class="keyword">new</span> UserDao();</span><br><span class="line">		<span class="comment">// 获取session</span></span><br><span class="line">		Session session = HibernateUtils.getCurrentSession();</span><br><span class="line">		<span class="comment">// 开启事务</span></span><br><span class="line">		Transaction tr = session.beginTransaction();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			dao.save1(u1);</span><br><span class="line">			<span class="keyword">int</span> a = <span class="number">10</span>/<span class="number">0</span>;</span><br><span class="line">			dao.save2(u2);</span><br><span class="line">			<span class="comment">// 提交事务</span></span><br><span class="line">			tr.commit();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			<span class="comment">// 出现问题：回滚事务</span></span><br><span class="line">			tr.rollback();</span><br><span class="line">		&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">		<span class="comment">// 自己释放资源，现在session不用关闭，线程结束了会自动关闭。</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  Servlet层代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SaveServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@see</span> HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		</span><br><span class="line">		User u1 = <span class="keyword">new</span> User();</span><br><span class="line">		u1.setName(<span class="string">"测试1"</span>);</span><br><span class="line">		</span><br><span class="line">		User u2 = <span class="keyword">new</span> User();</span><br><span class="line">		u2.setName(<span class="string">"测试2"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">new</span> UserService().save(u1, u2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@see</span> HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		doGet(request, response);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="Hibernate框架的查询方式"><a href="#Hibernate框架的查询方式" class="headerlink" title="Hibernate框架的查询方式"></a>Hibernate框架的查询方式</h3><hr>
+<p><strong>Query查询接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 具体的查询代码如下</span><br><span class="line">    <span class="comment">// 查询的方式 HQL from User where 属性 条件</span></span><br><span class="line">    <span class="comment">// SQL：select * from t_user where 字段 条件</span></span><br><span class="line">	<span class="comment">// 1.查询所有记录</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from Customer"</span>);</span><br><span class="line">	List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 2.条件查询:</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from Customer where name = ?"</span>);</span><br><span class="line">	query.setString(<span class="number">0</span>, <span class="string">"李健"</span>);</span><br><span class="line">	List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3.条件查询:</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from User where age &gt; ?"</span>);</span><br><span class="line">	query.setInteger(<span class="number">0</span>, <span class="number">18</span>);<span class="comment">// 设置值</span></span><br><span class="line">	System.out.println(list);<span class="comment">// 查询</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 4.条件查询:</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from Customer where name = :aaa and age = :bbb"</span>);</span><br><span class="line">	query.setString(<span class="string">"aaa"</span>, <span class="string">"李健"</span>);</span><br><span class="line">	query.setInteger(<span class="string">"bbb"</span>, <span class="number">38</span>);</span><br><span class="line">	List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//5.模糊查询</span></span><br><span class="line">    Query query = session.createQuery(<span class="string">"from User where name like ?"</span>);	</span><br><span class="line">	query.setString(<span class="number">0</span>, <span class="string">"%小%"</span>);<span class="comment">// 设置值</span></span><br><span class="line">    List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Criteria查询接口（做条件查询非常合适）</strong><br>完全面向对象，仅仅需要调方法，不用写SQL/HQL语句。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 具体的查询代码如下</span><br><span class="line">	<span class="comment">// 1.查询所有记录</span></span><br><span class="line">	<span class="comment">// 先获取到Criteria接口</span></span><br><span class="line">	Criteria criteria = session.createCriteria(Customer.class);</span><br><span class="line">    <span class="comment">// 没有添加条件，查询所有的数据</span></span><br><span class="line">	List&lt;Customer&gt; list = criteria.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 2.条件查询</span></span><br><span class="line">	Criteria criteria = session.createCriteria(Customer.class);</span><br><span class="line">	criteria.add(Restrictions.eq(<span class="string">"name"</span>, <span class="string">"李健"</span>));</span><br><span class="line">	List&lt;Customer&gt; list = criteria.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 3.条件查询</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Session session = HibernateUtils.getSession();</span><br><span class="line">	Transaction tr = session.beginTransaction();</span><br><span class="line">	<span class="comment">// 先获取到Criteria接口</span></span><br><span class="line">	Criteria criteria = session.createCriteria(User.class);</span><br><span class="line">	<span class="comment">// 添加查询的条件  select * from t_user where age &gt; 18</span></span><br><span class="line">	<span class="comment">// Criterion 是Hibernate提供的条件查询的对象，想要传入条件则需要使用工具类Restrictions</span></span><br><span class="line">	<span class="comment">// Restrictions提供的静态的方法，拼接查询的条件。greater than</span></span><br><span class="line">	criteria.add(Restrictions.gt(<span class="string">"age"</span>, <span class="number">18</span>));</span><br><span class="line">	<span class="comment">// 继续添加条件</span></span><br><span class="line">	criteria.add(Restrictions.like(<span class="string">"name"</span>, <span class="string">"%小%"</span>));</span><br><span class="line">	<span class="comment">// 没有添加条件，查询所有的数据</span></span><br><span class="line">	List&lt;User&gt; list = criteria.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	tr.commit();</span><br><span class="line">	session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/Hibernate_day02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/Hibernate_day02/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:36:24+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/09/Hibernate_day02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/Hibernate_day02/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Hibernate-02"><a href="#Hibernate-02" class="headerlink" title="Hibernate__02"></a>Hibernate__02</h2><hr>
+<p><strong>回顾上一章的内容：</strong></p>
+<ul>
+<li><p>Hibernate框架的概述：ORM</p>
+</li>
+<li><p>框架的入门的程序</p>
+<p>​    编写映射的配置文件</p>
+<pre><code>编写核心的配置文件
+
+编写程序
+</code></pre></li>
+<li><p>配置的文件</p>
+</li>
+<li><p>使用的接口和方法</p>
+</li>
+</ul>
+<hr>
+<p><strong>本章内容：</strong></p>
+<ul>
+<li><p>Hibernate持久化对象的状态</p>
+</li>
+<li><p>Hibernate的一级缓存</p>
+</li>
+<li><p>Hibernate操作持久化对象的方法</p>
+</li>
+<li><p>Hibernate的基本查询</p>
+<p><img src="/09/Hibernate_day02/F:/桌面\H02.png" alt="H02"></p>
+</li>
+</ul>
+<hr>
+<h3 id="Hibernate的持久化类"><a href="#Hibernate的持久化类" class="headerlink" title="Hibernate的持久化类"></a>Hibernate的持久化类</h3><hr>
+<p><strong>什么是持久化类</strong><br>持久化类:就是一个Java类（编写的JavaBean），这个Java类与表建立了映射关系就可以成为持久化类，它可以new持久化对象。</p>
+<p> <strong>持久化类 = JavaBean + xxx.hbm.xml</strong></p>
+<hr>
+<p><strong>持久化类的编写规则</strong></p>
+<ol>
+<li>提供一个无参数 public访问控制符的构造器    – 底层需要进行反射。</li>
+<li>提供一个标识属性（ 唯一标识OID，编码时配<id></id>标签），映射数据表主键字段 。数据库中通过主键确定对象，Java对象通过地址确定对象，持久化类通过唯一标识OID确定记录。</li>
+<li>所有属性提供public访问控制符的 set或者get 方法。</li>
+<li>标识属性应尽量使用基本数据类型的<strong>包装类型</strong>。</li>
+</ol>
+<hr>
+<p><strong>区分自然主键和代理主键</strong></p>
+<ol>
+<li><p>创建表的时候</p>
+<ul>
+<li>自然主键:对象本身的一个属性，充当主键的字段本身具有一定的含义，如创建一个人员表,每个人都有一个身份证号(唯一)，使用身份证号作为表的主键，即自然主键。（开发中不会使用这种方式）</li>
+<li>代理主键:不是对象本身的一个属性，充当主键的字段本身不具有业务意义，只具有主键作用，比如自动增长的ID。创建一个人员表,为每个人员单独创建一个字段并用这个字段作为主键，称为代理主键。（开发中推荐使用这种方式）</li>
+</ul>
+</li>
+<li><p>创建表的时候尽量使用<strong>代理主键</strong>创建表。</p>
+</li>
+</ol>
+<hr>
+<p><strong>主键的生成策略</strong></p>
+<ol>
+<li><p>increment:适用于short,int,long作为主键.不是使用的数据库自动增长机制。</p>
+<ul>
+<li><p>Hibernate中提供的一种增长机制.</p>
+<ul>
+<li>先进行查询:select max(id) from user;</li>
+<li>再进行插入:获得最大值+1作为新的记录的主键.</li>
+</ul>
+</li>
+<li><p>问题:不能在集群环境下或者有并发访问的情况下使用。</p>
+</li>
+</ul>
+</li>
+<li><p>identity:适用于short,int,long作为主键。但是这个必须搭配有自动增长的数据库，采用的是数据库底层的自动增长机制。</p>
+<ul>
+<li>底层使用的是数据库的自动增长(auto_increment)：像Oracle数据库没有自动增长，则不能使用。</li>
+</ul>
+</li>
+<li><p>sequence:适用于short,int,long作为主键，底层使用的是序列的增长方式。</p>
+<ul>
+<li>Oracle数据库底层没有自动增长,想自动增长需要使用序列，写一个序列函数。</li>
+</ul>
+</li>
+<li><p><strong>uuid:</strong>适用于char,varchar类型的作为主键。</p>
+<ul>
+<li>使用随机的字符串作为主键。</li>
+</ul>
+</li>
+<li><p><strong>native:本地策略</strong>：根据底层的数据库不同,自动选择适用于该种数据库的生成策略(short,int,long)。</p>
+<ul>
+<li>如果底层使用的MySQL数据库:相当于identity；</li>
+<li>如果底层使用Oracle数据库:相当于sequence。</li>
+</ul>
+</li>
+<li><p>assigned:主键的生成不用Hibernate管理了，必须手动设置主键。</p>
+</li>
+</ol>
+<hr>
+<h3 id="Hibernate持久化对象的状态"><a href="#Hibernate持久化对象的状态" class="headerlink" title="Hibernate持久化对象的状态"></a>Hibernate持久化对象的状态</h3><hr>
+<p><strong>持久化对象的状态</strong></p>
+<ol>
+<li><p>Hibernate的持久化类</p>
+<p>持久化类:Java类与数据库的某个表建立了映射关系.这个类就称为是持久化类。</p>
+<p>持久化类 = Java类 + hbm的配置文件。</p>
+</li>
+<li><p>Hibernate的持久化类的状态</p>
+<p>Hibernate为了管理持久化类：将持久化类分成了三个状态</p>
+<ul>
+<li><p>瞬时态:Transient  Object</p>
+<pre><code>没有持久化标识OID, 没有被纳入到Session对象的管理。
+</code></pre></li>
+<li><p><strong>持久态:Persistent Object</strong></p>
+<pre><code>有持久化标识OID,已经被纳入到Session对象的管理。
+
+持久态的对象具有自动更新数据库的能力。
+</code></pre></li>
+<li><p>托管态:Detached Object</p>
+<pre><code>有持久化标识OID,没有被纳入到Session对象的管理。
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 获取session</span></span><br><span class="line">        Session session = HibernateUtils.getSession();</span><br><span class="line">        Transaction tr = session.beginTransaction();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 持久User的对象</span></span><br><span class="line">        <span class="comment">// 瞬时态：没有OID的值，没有被session管理，此时user对象是瞬时态对象</span></span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setName(<span class="string">"cathy"</span>);</span><br><span class="line">        user.setAge(<span class="number">48</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 使用session保存用户</span></span><br><span class="line">       <span class="comment">// user对象中已经存在id的值，默认的情况下，调用save方法会把user对象也保存到session的缓存中</span></span><br><span class="line">        Serializable id = session.save(user);</span><br><span class="line">        System.out.println(<span class="string">"主键的值："</span>+id);</span><br><span class="line">        <span class="comment">// user是持久态对象</span></span><br><span class="line"></span><br><span class="line">        tr.commit();</span><br><span class="line">        <span class="comment">// session销毁，缓存没有了</span></span><br><span class="line">        session.close();</span><br><span class="line">        <span class="comment">// 打印</span></span><br><span class="line">        <span class="comment">// user对象存在id值，但session销毁了，缓存不存在，session不再管理user对象</span></span><br><span class="line">        <span class="comment">// user是托管态的对象</span></span><br><span class="line">        System.out.println(user.getId());</span><br><span class="line">        System.out.println(user.getName());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Hibernate持久化对象的状态的转换</strong></p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image001.png" alt="img">    </p>
+<ol>
+<li><p>瞬时态    – 没有持久化标识OID, 没有被纳入到Session对象的管理</p>
+<ul>
+<li><p>获得瞬时态的对象</p>
+<p>User user = new User()</p>
+</li>
+<li><p>瞬时态对象转换持久态</p>
+<p>save()/saveOrUpdate();</p>
+</li>
+<li><p>瞬时态对象转换成托管态</p>
+<p>user.setId(1)；（不建议使用，主键尽量由Hibernate框架进行管理）</p>
+</li>
+</ul>
+</li>
+<li><p>持久态    – 有持久化标识OID,已经被纳入到Session对象的管理</p>
+<ul>
+<li><p><strong>获得持久态的对象</strong></p>
+<p><strong>get()/load();</strong></p>
+</li>
+<li><p>持久态转换成瞬时态对象</p>
+<p>delete();  （有争议，不建议使用。删除了数据库中的记录，但是源程序还在)</p>
+</li>
+<li><p>持久态对象转成托管态对象</p>
+<p>session的close()/evict()/clear();</p>
+</li>
+</ul>
+</li>
+<li><p>托管态    – 有持久化标识OID,没有被纳入到Session对象的管理</p>
+<ul>
+<li><p>获得托管态对象:不建议直接获得托管态的对象。</p>
+<p>User user = new User();</p>
+<p>user.setId(1);</p>
+</li>
+<li><p>托管态对象转换成持久态对象：不建议使用</p>
+<p>update()/saveOrUpdate()/lock();</p>
+</li>
+<li><p>托管态对象转换成瞬时态对象：不建议使用</p>
+<p>user.setId(null);</p>
+</li>
+</ul>
+<p><strong>注意：持久态对象有自动更新数据库的能力——Session的一级缓存</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">     Session session = HibernateUtils.getSession();</span><br><span class="line">     Transaction tr = session.beginTransaction();</span><br><span class="line">     <span class="comment">//获取到持久态对象，具有自动更新数据库的能力</span></span><br><span class="line">     User user = session.get(User.class,<span class="number">2</span>);<span class="comment">//先通过主键进行查询</span></span><br><span class="line">     System.out.println(user.getName());</span><br><span class="line">     user.setName(<span class="string">"gavin"</span>);</span><br><span class="line">     <span class="comment">//理论上需编写代码：session.update(user);但实际上不需要</span></span><br><span class="line">     tr.commit();</span><br><span class="line">     session.close();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p> <img src="/09/Hibernate_day02/C:/Users\CY\AppData\Local\Temp\1536895433103.png" alt="1536895433103"></p>
+</li>
+</ol>
+<hr>
+<h3 id="Hibernate的一级缓存"><a href="#Hibernate的一级缓存" class="headerlink" title="Hibernate的一级缓存"></a>Hibernate的一级缓存</h3><hr>
+<p><strong>Session对象的一级缓存（重点）</strong></p>
+<ol>
+<li>什么是缓存？</li>
+</ol>
+<p>​         其实就是<strong>一块内存空间</strong>,将数据源（数据库或者文件）中的数据存放到缓存中，再次获取的时候 ,可以直接从缓存中获取，从而提升程序的性能。</p>
+<ol start="2">
+<li><p>Hibernate框架提供了两种缓存</p>
+<ul>
+<li><p>一级缓存：自带的，不可卸载。一级缓存的生命周期与session一致，一级缓存称为session级别的缓存。</p>
+</li>
+<li><p>二级缓存：增强一级缓存，因为一级缓存的生命周期比较短暂，在Session.close()后缓存就被清空。默认没有开启，需要手动配置才可以使用的。二级缓存可以在多个session中共享数据，二级缓存称为是sessionFactory级别的缓存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ProveSessionExist</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">//创建对象</span></span><br><span class="line">    User user=<span class="keyword">new</span> User();</span><br><span class="line">    user.setName(<span class="string">"guo"</span>);</span><br><span class="line">    user.setAge(<span class="number">23</span>);</span><br><span class="line">    <span class="comment">//保存用户，user已经被存入到session的缓存中</span></span><br><span class="line">    Serializable id  = session.save(user);</span><br><span class="line">    System.out.println(id);</span><br><span class="line">    <span class="comment">//获取对象，不会看到SQL语句</span></span><br><span class="line">    User user2 = session.get(User.class,id);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Session对象的缓存概述</p>
+<ul>
+<li>Session接口中,有一系列的java的集合（List）,这些java集合构成了Session级别的缓存(一级缓存)。</li>
+<li>对象存入到一级缓存后，在session结束生命周期之前，它都在session中存放着。</li>
+<li>内存中包含Session实例 –&gt; Session的缓存（一些集合） –&gt; 集合中包含的是缓存对象</li>
+</ul>
+</li>
+<li><p>证明一级缓存的存在，编写查询的代码即可证明</p>
+<ul>
+<li><p>在同一个Session对象中两次查询，第二次查询不会出现SQL语句，可以证明使用了缓存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 创建对象</span></span><br><span class="line">    User user = <span class="keyword">new</span> User();</span><br><span class="line">    user.setName(<span class="string">"haha"</span>);</span><br><span class="line">    user.setAge(<span class="number">20</span>);</span><br><span class="line">    <span class="comment">// 保存用户，user一级存入到session的缓存中</span></span><br><span class="line">    Serializable id = session.save(user);</span><br><span class="line">    System.out.println(id);</span><br><span class="line">    <span class="comment">// 获取对象，不会看到SQL语句</span></span><br><span class="line">    User user2 = session.get(User.class, id);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Hibernate框架是如何做到数据发生变化时进行同步操作的呢？</p>
+<ul>
+<li><p>使用get方法查询User对象</p>
+</li>
+<li><p>然后设置User对象的一个属性，注意：没有做update操作。发现，数据库中的记录也改变了</p>
+</li>
+<li><p>利用快照机制来完成的（SnapShot）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 获取到持久态的对象</span></span><br><span class="line">    User user = session.get(User.class,<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 重新设置新的名称</span></span><br><span class="line">    user.setName(<span class="string">"wang"</span>);</span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/09/Hibernate_day02/./图片/02-Session的快照机制.bmp" alt="">    </p>
+<hr>
+<p><strong>控制Session的一级缓存（了解）</strong></p>
+<p>Session接口中与一级缓存相关的方法</p>
+<ul>
+<li><p>Session.clear()– 清空缓存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line"></span><br><span class="line">    User user1 = session.get(User.class, <span class="number">3</span>);</span><br><span class="line">    System.out.println(user1.getName());</span><br><span class="line">    <span class="comment">// 清空缓存，下行语句再次执行时控制台会有SQL语句输出</span></span><br><span class="line">    session.clear();</span><br><span class="line"></span><br><span class="line">    User user2 = session.get(User.class, <span class="number">3</span>);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Session.evict(Object entity)– 从一级缓存中清除指定的实体对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 最简单的证明，查询两次</span></span><br><span class="line">    User user1 = session.get(User.class, <span class="number">1</span>);</span><br><span class="line">    System.out.println(user1.getName());</span><br><span class="line">    <span class="comment">// 清除user1对象</span></span><br><span class="line">    session.evict(user1);</span><br><span class="line"></span><br><span class="line">    User user2 = session.get(User.class, <span class="number">1</span>);</span><br><span class="line">    System.out.println(user2.getName());</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Session.flush()– 刷新缓存，在tr.commit()之前就进行缓存区域与快照区域之间的比较。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run7</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Session session = HibernateUtils.getSession();</span><br><span class="line">    Transaction tr = session.beginTransaction();</span><br><span class="line">    <span class="comment">// 获取到持久态的对象</span></span><br><span class="line">    User user = session.get(User.class,<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 重新设置新的名称</span></span><br><span class="line">    user.setName(<span class="string">"gavin"</span>);</span><br><span class="line">    <span class="comment">// 手动刷新缓存</span></span><br><span class="line">    session.flush();</span><br><span class="line"></span><br><span class="line">    tr.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="Hibernate中的事务与并发"><a href="#Hibernate中的事务与并发" class="headerlink" title="Hibernate中的事务与并发"></a>Hibernate中的事务与并发</h3><hr>
+<p><strong>事务相关的概念</strong></p>
+<ol>
+<li><p>什么是事务</p>
+<ul>
+<li>事务就是逻辑上的<strong>一组操作</strong>，组成事务的各个执行单元，操作要么全都成功，要么全都失败</li>
+<li>转账的例子：转钱：一方扣钱，一方收钱。两个操作组成了一个事情</li>
+</ul>
+</li>
+<li><p>事务的特性</p>
+<ul>
+<li>原子性： 事务不可分割</li>
+<li>一致性：事务执行的前后数据的完整性保持一致</li>
+<li>隔离性：一个事务执行的过程中,不应该受到其他的事务的干扰</li>
+<li>持久性： 事务一旦提交,数据就永久保持到数据库中</li>
+</ul>
+</li>
+<li><p>如果不考虑隔离性:引发一些读的问题</p>
+<ul>
+<li>脏读：一个事务读到了另一个事务未提交的数据。T1 修改了一行数据，然后 T2 在 T1 还未提交修改操作之前读取了被修改的行。如果 T1 回滚了修改操作，那么 T2 读取的数据就可以看作是从未存在过的。</li>
+<li>不可重复读：是指在数据库访问中，一个事务范围内两个相同的查询却返回了不同数据。这是由于查询时系统中其他事务修改的提交而引起的。比如事务T1读取某一数据，事务T2读取并修改了该数据，T1为了对读取值进行检验而再次读取该数据，便得到了不同的结果。只要事务不结束，查询到的结果就应该是一致的</li>
+<li>虚读：如果符合搜索条件的一行数据在后面的读取操作中出现，但该行数据却不属于最初的数据，就会发生这种事件。举例来说：T1 读取满足某种搜索条件的一些行，然后 T2 插入了符合 T1 的搜索条件的一个新行。如果 T1 重新执行产生原来那些行的查询，就会得到不同的行。</li>
+</ul>
+</li>
+<li><p>通过设置数据库的隔离级别来解决上述读的问题</p>
+<ul>
+<li>未提交读:以上的读的问题都有可能发生。</li>
+<li>已提交读:避免脏读，但是不可重复读，虚读都有可能发生。（Oracal）</li>
+<li>可重复读:避免脏读，不可重复读，但是虚读是有可能发生（MySQL默认）。</li>
+<li>串行化:以上读的情况都可以避免。</li>
+</ul>
+</li>
+<li><p>如果想在Hibernate的框架中来设置隔离级别，需要在hibernate.cfg.xml的配置文件中通过标签来配置</p>
+<ul>
+<li>通过：hibernate.connection.isolation = 4 来配置</li>
+<li>取值<ul>
+<li>1—Read uncommitted isolation</li>
+<li>2—Read committed isolation</li>
+<li>4—Repeatable read isolation</li>
+<li>8—Serializable isolation</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>丢失更新的问题</strong></p>
+<ol>
+<li><p>如果不考虑隔离性，也会产生写入数据的问题，这一类的问题叫丢失更新</p>
+<p>的问题</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>例如：两个事务同时对某一条记录做修改，就会引发丢失更新的问题。</p>
+<ul>
+<li>A事务和B事务同时获取到一条数据，同时再做修改</li>
+<li>如果A事务修改完成后，提交了事务</li>
+<li>B事务修改完成后，不管是提交还是回滚或不做处理，都会对数据产生影响</li>
+</ul>
+</li>
+<li><p>解决方案有两种</p>
+<ul>
+<li><p>悲观锁</p>
+<ul>
+<li>采用的是数据库提供的一种锁机制，如果采用做了这种机制，在SQL语句的后面添加 for update 子句</li>
+<li>当A事务在操作该条记录时，会把该条记录锁起来，其他事务是不能操作这条记录的</li>
+<li>只有当A事务提交后，锁释放了，其他事务才能操作该条记录</li>
+</ul>
+</li>
+<li><p>乐观锁</p>
+<ul>
+<li>采用版本号的机制来解决的。会给表结构添加一个字段version=0，默认值是0</li>
+<li>当A事务在操作完该条记录，提交事务时，会先检查版本号，如果发生版本号的值相同时，才可以提交事务。同时会更新版本号version=1.</li>
+<li>当B事务操作完该条记录时，提交事务时，会先检查版本号，如果发现版本不同时，程序会出现错误，会抛出异常需要重新查询。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用Hibernate框架解决丢失更新的问题</p>
+<ul>
+<li><p>悲观锁</p>
+<ul>
+<li>使用session.get(Customer.class, 1,LockMode.UPGRADE); 方法</li>
+</ul>
+</li>
+<li><p>乐观锁</p>
+<ul>
+<li>1.在对应的JavaBean中添加一个属性，名称可以是任意的。例如：private Integer version; 提供get和set方法</li>
+<li>2.在映射的配置文件中，提供 <version name="version">标签即可。</version></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/09/Hibernate_day02/./图片/03-丢失更新.bmp" alt="">    </p>
+<hr>
+<p><strong>绑定本地的Session</strong></p>
+<ol>
+<li><p>之前在讲JavaWEB的事务的时候，需要在业务层使用Connection来开启事务。</p>
+<ul>
+<li><p>一种是通过参数的方式传递下去</p>
+</li>
+<li><p>另一种是把Connection绑定到ThreadLocal对象中，只要是同一个线程，它的Connection就是同一个。</p>
+<p><img src="/09/Hibernate_day02/F:/桌面\Pic1.PNG" alt="Pic1"></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li><p>现在的Hibernate框架中，使用session对象开启事务，所以需要来传递session对象，框架提供了ThreadLocal的方式</p>
+<ul>
+<li><p>需要在hibernate.cfg.xml的配置文件中提供如下配置：</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernate.current_session_context_class"</span>&gt;</span>thread<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新HibernateUtil的工具类，使用SessionFactory的getCurrentSession()方法，获取当前的Session对象。并且该Session对象不用手动关闭，线程结束了，会自动关闭。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Session <span class="title">getCurrentSession</span><span class="params">()</span></span>&#123;</span><br><span class="line">  		<span class="keyword">return</span> factory.getCurrentSession();</span><br><span class="line">  	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意：想使用getCurrentSession()方法，必须要先配置才能使用。</p>
+<p>  Dao层代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save1</span><span class="params">(User u1)</span></span>&#123;</span><br><span class="line">		Session session = HibernateUtils.getCurrentSession();</span><br><span class="line">		session.save(u1);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save2</span><span class="params">(User u2)</span></span>&#123;</span><br><span class="line">		Session session = HibernateUtils.getCurrentSession();</span><br><span class="line">		session.save(u2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  Service层代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(User u1,User u2)</span></span>&#123;</span><br><span class="line">		UserDao dao = <span class="keyword">new</span> UserDao();</span><br><span class="line">		<span class="comment">// 获取session</span></span><br><span class="line">		Session session = HibernateUtils.getCurrentSession();</span><br><span class="line">		<span class="comment">// 开启事务</span></span><br><span class="line">		Transaction tr = session.beginTransaction();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			dao.save1(u1);</span><br><span class="line">			<span class="keyword">int</span> a = <span class="number">10</span>/<span class="number">0</span>;</span><br><span class="line">			dao.save2(u2);</span><br><span class="line">			<span class="comment">// 提交事务</span></span><br><span class="line">			tr.commit();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			<span class="comment">// 出现问题：回滚事务</span></span><br><span class="line">			tr.rollback();</span><br><span class="line">		&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">		<span class="comment">// 自己释放资源，现在session不用关闭，线程结束了会自动关闭。</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  Servlet层代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SaveServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@see</span> HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		</span><br><span class="line">		User u1 = <span class="keyword">new</span> User();</span><br><span class="line">		u1.setName(<span class="string">"测试1"</span>);</span><br><span class="line">		</span><br><span class="line">		User u2 = <span class="keyword">new</span> User();</span><br><span class="line">		u2.setName(<span class="string">"测试2"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">new</span> UserService().save(u1, u2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@see</span> HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		doGet(request, response);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="Hibernate框架的查询方式"><a href="#Hibernate框架的查询方式" class="headerlink" title="Hibernate框架的查询方式"></a>Hibernate框架的查询方式</h3><hr>
+<p><strong>Query查询接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 具体的查询代码如下</span><br><span class="line">    <span class="comment">// 查询的方式 HQL from User where 属性 条件</span></span><br><span class="line">    <span class="comment">// SQL：select * from t_user where 字段 条件</span></span><br><span class="line">	<span class="comment">// 1.查询所有记录</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from Customer"</span>);</span><br><span class="line">	List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 2.条件查询:</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from Customer where name = ?"</span>);</span><br><span class="line">	query.setString(<span class="number">0</span>, <span class="string">"李健"</span>);</span><br><span class="line">	List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 3.条件查询:</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from User where age &gt; ?"</span>);</span><br><span class="line">	query.setInteger(<span class="number">0</span>, <span class="number">18</span>);<span class="comment">// 设置值</span></span><br><span class="line">	System.out.println(list);<span class="comment">// 查询</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 4.条件查询:</span></span><br><span class="line">	Query query = session.createQuery(<span class="string">"from Customer where name = :aaa and age = :bbb"</span>);</span><br><span class="line">	query.setString(<span class="string">"aaa"</span>, <span class="string">"李健"</span>);</span><br><span class="line">	query.setInteger(<span class="string">"bbb"</span>, <span class="number">38</span>);</span><br><span class="line">	List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//5.模糊查询</span></span><br><span class="line">    Query query = session.createQuery(<span class="string">"from User where name like ?"</span>);	</span><br><span class="line">	query.setString(<span class="number">0</span>, <span class="string">"%小%"</span>);<span class="comment">// 设置值</span></span><br><span class="line">    List&lt;Customer&gt; list = query.list();</span><br><span class="line">	System.out.println(list);</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Criteria查询接口（做条件查询非常合适）</strong><br>完全面向对象，仅仅需要调方法，不用写SQL/HQL语句。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 具体的查询代码如下</span><br><span class="line">	<span class="comment">// 1.查询所有记录</span></span><br><span class="line">	<span class="comment">// 先获取到Criteria接口</span></span><br><span class="line">	Criteria criteria = session.createCriteria(Customer.class);</span><br><span class="line">    <span class="comment">// 没有添加条件，查询所有的数据</span></span><br><span class="line">	List&lt;Customer&gt; list = criteria.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 2.条件查询</span></span><br><span class="line">	Criteria criteria = session.createCriteria(Customer.class);</span><br><span class="line">	criteria.add(Restrictions.eq(<span class="string">"name"</span>, <span class="string">"李健"</span>));</span><br><span class="line">	List&lt;Customer&gt; list = criteria.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 3.条件查询</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Session session = HibernateUtils.getSession();</span><br><span class="line">	Transaction tr = session.beginTransaction();</span><br><span class="line">	<span class="comment">// 先获取到Criteria接口</span></span><br><span class="line">	Criteria criteria = session.createCriteria(User.class);</span><br><span class="line">	<span class="comment">// 添加查询的条件  select * from t_user where age &gt; 18</span></span><br><span class="line">	<span class="comment">// Criterion 是Hibernate提供的条件查询的对象，想要传入条件则需要使用工具类Restrictions</span></span><br><span class="line">	<span class="comment">// Restrictions提供的静态的方法，拼接查询的条件。greater than</span></span><br><span class="line">	criteria.add(Restrictions.gt(<span class="string">"age"</span>, <span class="number">18</span>));</span><br><span class="line">	<span class="comment">// 继续添加条件</span></span><br><span class="line">	criteria.add(Restrictions.like(<span class="string">"name"</span>, <span class="string">"%小%"</span>));</span><br><span class="line">	<span class="comment">// 没有添加条件，查询所有的数据</span></span><br><span class="line">	List&lt;User&gt; list = criteria.list();</span><br><span class="line">	System.out.println(list);</span><br><span class="line">	tr.commit();</span><br><span class="line">	session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/drools workbench/Drools WorkBench部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/drools workbench/Drools WorkBench部署/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:36:11+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/09/drools workbench/Drools WorkBench部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/drools workbench/Drools WorkBench部署/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  371
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Drools-WorkBench部署"><a href="#Drools-WorkBench部署" class="headerlink" title="Drools WorkBench部署"></a>Drools WorkBench部署</h1><h2 id="所需环境"><a href="#所需环境" class="headerlink" title="所需环境"></a>所需环境</h2><ol>
+<li>Windows系统</li>
+<li>Tomcat8.0.33</li>
+<li>JDK1.8</li>
+</ol>
+<h2 id="各种下载"><a href="#各种下载" class="headerlink" title="各种下载"></a>各种下载</h2><h3 id="workbench的war包"><a href="#workbench的war包" class="headerlink" title="workbench的war包"></a>workbench的war包</h3><p>kie-drools-wb-6.5.0.Final-tomcat7.war](<a href="http://drools.org/download/download.html" target="_blank" rel="noopener">http://drools.org/download/download.html</a>)</p>
+<p><em>下载后解压war包，并把解压后的文件名改为kie-drools-wb,然后放入tomcat的webapps目录下</em></p>
+<h3 id="相关jar包："><a href="#相关jar包：" class="headerlink" title="相关jar包："></a>相关jar包：</h3><p><a href="http://mvnrepository.com/artifact/org.kie/kie-tomcat-integration" target="_blank" rel="noopener">kie-tomcat-integration</a> » 7.11.0.Final</p>
+<p><a href="http://mvnrepository.com/artifact/javax.security.jacc/javax.security.jacc-api" target="_blank" rel="noopener">javax.security.jacc-api</a> » 1.5</p>
+<p><a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-api" target="_blank" rel="noopener">slf4j-api</a> » 1.7.25</p>
+<p><em>以上jar包均从<a href="http://mvnrepository.com/" target="_blank" rel="noopener">Maven仓库</a>进行下载，下载后放入tomcat的lib目录下</em></p>
+<h2 id="各种配置"><a href="#各种配置" class="headerlink" title="各种配置"></a>各种配置</h2><p>1、在tomcat的bin目录下创建setenv.bat文件(linux是setevn.sh文件)，并写入以下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//setenv.bat,输入时不需要换行</span><br><span class="line">set CATALINA_OPTS=-Xmx512M-Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config-Dorg.jboss.logging.provider=jdk</span><br><span class="line"></span><br><span class="line">//setevn.sh</span><br><span class="line">CATALINA_OPTS="-Xms2048M -Xmx2048M\-Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config \-Dorg.jboss.logging.provider=jdk"</span><br></pre></td></tr></table></figure>
+<p>2、在config目录下的server.xml文件中配置内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Valve className=&quot;org.kie.integration.tomcat.JACCValve&quot; /&gt;![1](F:\桌面\1.PNG)</span><br></pre></td></tr></table></figure>
+<p><img src="/09/drools workbench/Drools WorkBench部署/F:/桌面\1.PNG" alt="1"></p>
+<p>3、在config目录下的tomcat-users.xml文件中添加角色和用户名，注意确保至少有admin角色或者analyst其中一个角色。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;role rolename=&quot;admin&quot;/&gt;</span><br><span class="line">  &lt;role rolename=&quot;analyst&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;admin&quot; password=&quot;admin&quot; roles=&quot;admin&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;analyst&quot; password=&quot;analyst&quot; roles=&quot;analyst&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/09/drools workbench/Drools WorkBench部署/F:/桌面\2.PNG" alt="2"></p>
+<h2 id="测试运行"><a href="#测试运行" class="headerlink" title="测试运行"></a>测试运行</h2><h3 id="启动Tomcat"><a href="#启动Tomcat" class="headerlink" title="启动Tomcat"></a>启动Tomcat</h3><p>Windows下：<code>cd /d yourtomcat/bin</code>输入<code>startup.bat</code>启动Tomcat</p>
+<h3 id="登录Workbench"><a href="#登录Workbench" class="headerlink" title="登录Workbench"></a>登录Workbench</h3><p>输入地址：<a href="http://localhost:8080/kie-drools-wb/kie-drools-wb.jsp，根据tomcat-users.xml里的配置输入用户名和密码（admin&amp;admin）进行登录。" target="_blank" rel="noopener">http://localhost:8080/kie-drools-wb/kie-drools-wb.jsp，根据tomcat-users.xml里的配置输入用户名和密码（admin&amp;admin）进行登录。</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/Drools WorkBench部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/Drools WorkBench部署/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:36:11+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/09/Drools WorkBench部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/Drools WorkBench部署/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  371
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Drools-WorkBench部署"><a href="#Drools-WorkBench部署" class="headerlink" title="Drools WorkBench部署"></a>Drools WorkBench部署</h1><h2 id="所需环境"><a href="#所需环境" class="headerlink" title="所需环境"></a>所需环境</h2><ol>
+<li>Windows系统</li>
+<li>Tomcat8.0.33</li>
+<li>JDK1.8</li>
+</ol>
+<h2 id="各种下载"><a href="#各种下载" class="headerlink" title="各种下载"></a>各种下载</h2><h3 id="workbench的war包"><a href="#workbench的war包" class="headerlink" title="workbench的war包"></a>workbench的war包</h3><p>kie-drools-wb-6.5.0.Final-tomcat7.war](<a href="http://drools.org/download/download.html" target="_blank" rel="noopener">http://drools.org/download/download.html</a>)</p>
+<p><em>下载后解压war包，并把解压后的文件名改为kie-drools-wb,然后放入tomcat的webapps目录下</em></p>
+<h3 id="相关jar包："><a href="#相关jar包：" class="headerlink" title="相关jar包："></a>相关jar包：</h3><p><a href="http://mvnrepository.com/artifact/org.kie/kie-tomcat-integration" target="_blank" rel="noopener">kie-tomcat-integration</a> » 7.11.0.Final</p>
+<p><a href="http://mvnrepository.com/artifact/javax.security.jacc/javax.security.jacc-api" target="_blank" rel="noopener">javax.security.jacc-api</a> » 1.5</p>
+<p><a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-api" target="_blank" rel="noopener">slf4j-api</a> » 1.7.25</p>
+<p><em>以上jar包均从<a href="http://mvnrepository.com/" target="_blank" rel="noopener">Maven仓库</a>进行下载，下载后放入tomcat的lib目录下</em></p>
+<h2 id="各种配置"><a href="#各种配置" class="headerlink" title="各种配置"></a>各种配置</h2><p>1、在tomcat的bin目录下创建setenv.bat文件(linux是setevn.sh文件)，并写入以下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//setenv.bat,输入时不需要换行</span><br><span class="line">set CATALINA_OPTS=-Xmx512M-Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config-Dorg.jboss.logging.provider=jdk</span><br><span class="line"></span><br><span class="line">//setevn.sh</span><br><span class="line">CATALINA_OPTS="-Xms2048M -Xmx2048M\-Djava.security.auth.login.config=$CATALINA_HOME/webapps/kie-drools-wb/WEB-INF/classes/login.config \-Dorg.jboss.logging.provider=jdk"</span><br></pre></td></tr></table></figure>
+<p>2、在config目录下的server.xml文件中配置内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Valve className=&quot;org.kie.integration.tomcat.JACCValve&quot; /&gt;![1](F:\桌面\1.PNG)</span><br></pre></td></tr></table></figure>
+<p><img src="/09/Drools WorkBench部署/F:/桌面\1.PNG" alt="1"></p>
+<p>3、在config目录下的tomcat-users.xml文件中添加角色和用户名，注意确保至少有admin角色或者analyst其中一个角色。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;role rolename=&quot;admin&quot;/&gt;</span><br><span class="line">  &lt;role rolename=&quot;analyst&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;admin&quot; password=&quot;admin&quot; roles=&quot;admin&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;analyst&quot; password=&quot;analyst&quot; roles=&quot;analyst&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/09/Drools WorkBench部署/F:/桌面\2.PNG" alt="2"></p>
+<h2 id="测试运行"><a href="#测试运行" class="headerlink" title="测试运行"></a>测试运行</h2><h3 id="启动Tomcat"><a href="#启动Tomcat" class="headerlink" title="启动Tomcat"></a>启动Tomcat</h3><p>Windows下：<code>cd /d yourtomcat/bin</code>输入<code>startup.bat</code>启动Tomcat</p>
+<h3 id="登录Workbench"><a href="#登录Workbench" class="headerlink" title="登录Workbench"></a>登录Workbench</h3><p>输入地址：<a href="http://localhost:8080/kie-drools-wb/kie-drools-wb.jsp，根据tomcat-users.xml里的配置输入用户名和密码（admin&amp;admin）进行登录。" target="_blank" rel="noopener">http://localhost:8080/kie-drools-wb/kie-drools-wb.jsp，根据tomcat-users.xml里的配置输入用户名和密码（admin&amp;admin）进行登录。</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/Java多态相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/Java多态相关/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:35:28+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/09/Java多态相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/Java多态相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  602
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Java多态相关"><a href="#Java多态相关" class="headerlink" title="Java多态相关"></a>Java多态相关</h1><h2 id="面向对象的三大特性"><a href="#面向对象的三大特性" class="headerlink" title="面向对象的三大特性"></a><strong>面向对象的三大特性</strong></h2><p>​         封装、继承、多态。从一定角度来看，封装和继承几乎都是为多态而准备的。</p>
+<h2 id="多态的定义"><a href="#多态的定义" class="headerlink" title="多态的定义"></a>多态的定义</h2><p>​        指允许不同类的对象对同一消息做出响应。即同一消息可以根据发送对象的不同而采用多种不同的行为方式。（发送消息就是函数调用）</p>
+<h2 id="实现多态的技术称为"><a href="#实现多态的技术称为" class="headerlink" title="实现多态的技术称为"></a><strong>实现多态的技术称为</strong></h2><p>​        动态绑定（dynamic binding），是指在执行期间判断所引用对象的实际类型，根据其实际的类型调用其相应的方法。</p>
+<h2 id="多态的作用"><a href="#多态的作用" class="headerlink" title="多态的作用"></a><strong>多态的作用</strong></h2><p>​         消除类型之间的耦合关系。</p>
+<h2 id="多态的例子"><a href="#多态的例子" class="headerlink" title="多态的例子"></a>多态的例子</h2><p>​         比方说按下 F1 键这个动作，如果当前在 Flash 界面下弹出的就是 AS 3 的帮助文档；如果当前在 Word 下弹出的就是 Word 帮助；在 Windows 下弹出的就是 Windows 帮助和支持。同一个事件发生在不同的对象上会产生不同的结果。</p>
+<h2 id="多态存在的三个必要条件"><a href="#多态存在的三个必要条件" class="headerlink" title="多态存在的三个必要条件"></a>多态存在的三个必要条件</h2><ul>
+<li>要有继承</li>
+<li>要有重写</li>
+<li>父类引用指向子类对象</li>
+</ul>
+<h2 id="多态的好处"><a href="#多态的好处" class="headerlink" title="多态的好处"></a><strong>多态的好处</strong></h2><ul>
+<li>可替换性（substitutability）。多态对已存在代码具有可替换性。例如，多态对圆Circle类工作，对其他任何圆形几何体，如圆环，也同样工作。</li>
+<li>可扩充性（extensibility）。多态对代码具有可扩充性。增加新的子类不影响已存在类的多态性、继承性，以及其他特性的运行和操作。实际上新加子类更容易获得多态功能。例如，在实现了圆锥、半圆锥以及半球体的多态基础上，很容易增添球体类的多态性。</li>
+<li>接口性（interface-ability）。多态是超类通过方法签名，向子类提供了一个共同接口，由子类来完善或者覆盖它而实现的。如超类Shape规定了两个实现多态的接口方法，computeArea()以及computeVolume()。子类，如Circle和Sphere为了实现多态，完善或者覆盖这两个接口方法。</li>
+<li>灵活性（flexibility）。它在应用中体现了灵活多样的操作，提高了使用效率。</li>
+<li>简化性（simplicity）。多态简化对应用软件的代码编写和修改过程，尤其在处理大量对象的运算和操作时，这个特点尤为突出和重要。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/Web服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo Zhangruo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="右边的小耳朵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/09/Web服务器/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:35:28+08:00">
+                2018-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/09/Web服务器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/Web服务器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h1><h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>​         web容器或web服务器（比如Tomcat或者jboss）是怎样工作的？它们是怎样处理来自全世界的http请求的？它们在幕后做了什么动作？Java Servlet API（例如ServletContext，ServletRequest，ServletResponse和Session这些类）在其中扮演了什么角色？</p>
+<h2 id="文章章节"><a href="#文章章节" class="headerlink" title="文章章节"></a><strong>文章章节</strong></h2><p>·         什么是web服务器、应用服务器和web容器？</p>
+<p>·         什么是Servlet？他们有什么作用？</p>
+<p>·         什么是ServletContext？它由谁创建？</p>
+<p>·         ServletRequest和ServletResponse从哪里进入生命周期？</p>
+<p>·         如何管理Session？知道cookie吗？</p>
+<p>·         如何确保线程安全？</p>
+<h3 id="什么是web服务器，应用服务器和web容器？"><a href="#什么是web服务器，应用服务器和web容器？" class="headerlink" title="什么是web服务器，应用服务器和web容器？"></a><strong>什么是web服务器，应用服务器和web容器？</strong></h3><p>​         我们先讨论<strong>web服务器</strong>和<strong>应用服务器</strong>。用一句话大概讲讲：“在过去它们是有区别的，但是这两个不同的分类慢慢地合并了，而如今在大多在情况下和使用中可以把它们看成一个整体。”</p>
+<p>​         在<a href="http://en.wikipedia.org/wiki/Mosaic_%28web_browser%29" target="_blank" rel="noopener">Mosaic浏览器</a>（通常被认为是第一个图形化的web浏览器）和超链接内容的初期，演变出了“web服务器”的新概念，它通过<a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank" rel="noopener">HTTP</a>协议来提供静态页面内容和图片服务。在那个时候，大多数内容都是静态的，并且HTTP 1.0只是一种传送文件的方式。但在不久后web服务器提供了<a href="http://www.invir.com/int-prog-cgi.html" target="_blank" rel="noopener">CGI</a>功能。这意味着我们可以为每个web请求启动一个进程来产生动态内容。现在，HTTP协议已经很成熟了，并且web服务器变得更加复杂，拥有了像缓存、安全和session管理这些附加功能。随着技术的进一步成熟，我们从Kiva和<a href="http://en.wikipedia.org/wiki/NetDynamics_Application_Server" target="_blank" rel="noopener">NetDynamics</a>学会了公司专属的基于Java的服务器端技术。这些技术最终全都融入到我们今天依然在大多数应用开发里使用的JSP中。</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image001.gif" alt="http://ww1.sinaimg.cn/mw690/b254dc71gw1ep5905azewg20go0bm0t6.gif"></p>
+<p>​         以上是关于web服务器的。现在我们来讨论<strong>应用服务器</strong>。</p>
+<p>​         在同一时期，应用服务器已经存在并发展很长一段时间了。一些公司为Unix开发了<a href="http://en.wikipedia.org/wiki/Tuxedo_%28software%29" target="_blank" rel="noopener">Tuxedo</a>（面向事务的中间件）、<strong>TopEnd</strong>、<strong>Encina</strong>等产品，这些产品都是从类似IMS和CICS的主机应用管理和监控环境衍生而来的。大部分的这些产品都指定了“封闭的”产品专用通信协议来互连胖客户机(“fat” client)和服务器。在90年代，这些传统的应用服务器产品开始嵌入HTTP通信功能，刚开始要利用网关来实现。不久后它们之间的界线开始变得模糊了。</p>
+<p>​        同时，web服务器越来越成熟，可以处理更高的负载、更多的并发和拥有更好的特性；应用服务器开始添加越来越多的基于HTTP的通信功能。所有的这些导致了web服务器与应用服务器的界线变得更窄了。</p>
+<p>​        目前，“应用服务器”和“web服务器”之间的界线已经变得模糊不清了。但是人们还把这两个术语区分开来，作为强调使用。</p>
+<p>​        当有人说到“web服务器”时，你通常要把它认为是以HTTP为核心、web UI为向导的应用。当有人说到“应用服务器”时，你可能想到“高负载、企业级特性、事务和队列、多通道通信（HTTP和更多的协议）”。但现在提供这些需求的基本上都是同一个产品。</p>
+<p>​        以上就是关于web服务器和应用服务器的全部内容。现在我们来看看第三个术语，即web容器。</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image002.jpg" alt="http://ww2.sinaimg.cn/mw690/b254dc71gw1ep5905ms0dj20ev05vq2y.jpg"></p>
+<p>​         在Java方面，<a href="http://en.wikipedia.org/wiki/Web_container" target="_blank" rel="noopener">web容器</a>一般是指Servlet容器。Servlet容器是与Java Servlet交互的web容器的组件。web容器负责管理Servlet的生命周期、把URL映射到特定的Servlet、确保URL请求拥有正确的访问权限和更多类似的服务。综合来看，<strong>Servlet容器就是用来运行你的Servlet和维护它的生命周期的运行环境。</strong></p>
+<h3 id="什么是Servlet？他们有什么作用？"><a href="#什么是Servlet？他们有什么作用？" class="headerlink" title="什么是Servlet？他们有什么作用？"></a><strong>什么是Servlet？他们有什么作用？</strong></h3><p>​         在Java里，<strong>Servlet使你能够编写根据请求动态生成内容的服务端组件</strong>。事实上，Servlet是一个在javax.servlet包里定义的接口。它为Servlet的生命周期声明了三个基本方法——init()、service()和destroy()。每个Servlet都要实现这些方法（在SDK里定义或者用户定义）并在它们的生命周期的特定时间由服务器来调用这些方法。</p>
+<p>​        类加载器通过<strong>懒加载（lazy-loading）或者预加载（eager loading）</strong>自动地把Servlet类加载到容器里。每个请求都拥有自己的线程，而一个Servlet对象可以同时为多个线程服务。当Servlet对象不再被使用时，它就会被JVM当做垃圾回收掉。</p>
+<p>懒加载的Servlet：</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image003.jpg" alt="http://ww2.sinaimg.cn/mw690/b254dc71gw1ep59037o3ej208e08it8v.jpg"><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image004.jpg" alt="http://ww4.sinaimg.cn/mw690/b254dc71gw1ep5902u9f1j208d08hq3v.jpg"></p>
+<p>预加载的Servlet</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image005.jpg" alt="http://ww3.sinaimg.cn/mw690/b254dc71gw1ep5901hyivj208f08iaap.jpg"><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image006.jpg" alt="http://ww4.sinaimg.cn/mw690/b254dc71gw1ep59014zsvj208e08hgmc.jpg"></p>
+<h3 id="什么是ServletContext？它由谁创建？"><a href="#什么是ServletContext？它由谁创建？" class="headerlink" title="什么是ServletContext？它由谁创建？"></a><strong>什么是ServletContext？它由谁创建？</strong></h3><p>​        当Servlet容器启动时，它会部署并加载所有的web应用。当web应用被加载时，<strong>Servlet容器会一次性为每个应用创建Servlet上下文（ServletContext）并把它保存在内存里。</strong>Servlet容器会处理web应用的web.xml文件，并且一次性创建在web.xml里定义的Servlet、Filter和Listener，同样也会把它们保存在内存里。当Servlet容器关闭时，它会卸载所有的web应用和ServletContext，所有的Servlet、Filter和Listner实例都会被销毁。</p>
+<p>​         从Java文档可知，ServletContext定义了一组方法，<strong>Servlet使用这些方法来与它的Servlet容器进行通信</strong>。例如，用来获取文件的MIME类型、转发请求或者编写日志文件。<strong>在web应用的部署文件（deployment descriptor）标明“分布式”的情况下</strong>，web应用的每一个虚拟机都拥有一个上下文实例。在这种情况下，<strong>不能把Servlet上下文当做共享全局信息的变量</strong>（因为它的信息已经不具有全局性了）。可以使用外部资源来代替，比如数据库。</p>
+<h3 id="ServletRequest和ServletResponse从哪里进入生命周期？"><a href="#ServletRequest和ServletResponse从哪里进入生命周期？" class="headerlink" title="ServletRequest和ServletResponse从哪里进入生命周期？"></a><strong>ServletRequest和ServletResponse从哪里进入生命周期？</strong></h3><p>​       Servlet容器包含在web服务器中，web服务器监听来自特定端口的HTTP请求，这个端口通常是80。当客户端（使用web浏览器的用户）发送一个HTTP请求时，<strong>Servlet容器会创建新的HttpServletRequest和HttpServletResponse对象</strong>，并且把它们传递给已经创建的Filter和URL模式与请求URL匹配的Servlet实例的方法，所有的这些都使用同一个线程。</p>
+<p>​        request对象提供了获取HTTP请求的所有信息的入口，比如请求头和请求实体。response对象提供了控制和发送HTTP响应的便利方法，比如设置响应头和响应实体（通常是JSP生成的HTML内容）。当HTTP响应被提交并结束后，request和response对象都会被销毁。</p>
+<h3 id="如何管理Session？知道cookie吗？"><a href="#如何管理Session？知道cookie吗？" class="headerlink" title="如何管理Session？知道cookie吗？"></a><strong>如何管理Session？知道cookie吗？</strong></h3><p>​         当客户端第一次访问web应用或者第一次使用request.getSession()获取HttpSession时，Servlet容器会创建Session，生成一个long类型的唯一ID（你可以使用session.getId()获取它）并把它保存在服务器的内存里。Servlet容器同样会在HTTP响应里设置一个Cookie，cookie的名是<strong>JSESSIONID</strong>并且cookie的值是session的唯一ID。</p>
+<p>​        根据<a href="http://www.faqs.org/rfcs/rfc2965.html" target="_blank" rel="noopener">HTTP cookie规范</a>（正规的web浏览器和web服务器必须遵守的约定），在cookie的有效期间，客户端（web浏览器）之后的请求都要把这个cookie返回给服务器。Servlet容器会利用带有名为JSESSIONID的cookie检测每一个到来的HTTP请求头，并使用cookie的值从服务器内容里获取相关的HttpSession。</p>
+<p>​        HttpSession会一直存活着，除非超过一段时间没使用。你可以在web.xml里设定这个时间段，<strong>默认时间段是30分钟</strong>。因此，如果客户端已经超过30分钟没有访问web应用的话，Servlet容器就会销毁Session。之后的每一个请求，即使带有特定的cookie，都再也不会访问到同一个Session了。servletcontainer会创建一个新的Session。</p>
+<p>现有的Session</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image007.jpg" alt="http://ww2.sinaimg.cn/mw690/b254dc71gw1ep5902g0ifj208e08jq3r.jpg"></p>
+<p>新的Session</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image008.jpg" alt="http://ww4.sinaimg.cn/mw690/b254dc71gw1ep5903nmyej20gu08k40f.jpg"></p>
+<p>​         另外，<strong>在客户端的session cookie拥有一个默认的存活时间，这个时间与浏览器的运行时间相同</strong>。因此，当用户关闭浏览器后（所有的标签或者窗口），客户端的Session就会被销毁。重新打开浏览器后，与之前的Session关联的cookie就再也不会被发送出去了。再次使用request.getSession()会返回一个全新的HttpSession并且使用一个全新的session ID来设置cookie。</p>
+<h3 id="如何确保线程安全"><a href="#如何确保线程安全" class="headerlink" title="如何确保线程安全?"></a><strong>如何确保线程安全?</strong></h3><p>​         我们现在应该已经知道所有的请求都在共享Servlet和Filter。这是Java的一个很棒的特性，它是<a href="http://howtodoinjava.com/category/core-java/multi-threading/" target="_blank" rel="noopener">多线程的</a>并且不同的线程（即HTTP请求）可以使用同一个实例。否则，对每一个请求都重新创建一个实体会耗费很多的资源。</p>
+<p><img src="file:///C:\Users\CY\AppData\Local\Temp\msohtmlclip1\01\clip_image009.jpg" alt="http://ww1.sinaimg.cn/mw690/b254dc71gw1ep5904rzzvj208f08hwf3.jpg"></p>
+<p>​        我们同样要知道，不应该使用Servlet或者Filter的实例变量来存放任何的请求或者会话范围内的数据。这些数据会被其他Session的所有请求共享。这是非线程安全的！下面的例子说明了这个问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Object thisIsNOTThreadSafe; <span class="comment">//Don't do this</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException</span>&#123;</span><br><span class="line">    Object thisIsThreadSafe;</span><br><span class="line">    thisIsNOTThreadSafe = request.getParameter(<span class="string">"foo"</span>); <span class="comment">// BAD!! Shared among all requests!</span></span><br><span class="line">    thisIsThreadSafe = request.getParameter(<span class="string">"foo"</span>); <span class="comment">// OK, this is thread safe.</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不要这样做，这会导致软件出bug。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/30/LeetCode__290 Word Pattern/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1069,1160 +2851,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/19/LeetCode__217 Contains Duplicate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Guo Zhangruo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="右边的小耳朵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/19/LeetCode__217 Contains Duplicate/" itemprop="url">LeetCode__217 Contains Duplicate</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T18:03:07+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode-Hash-Table/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode/Hash Table</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/19/LeetCode__217 Contains Duplicate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/19/LeetCode__217 Contains Duplicate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  591
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Given an array of integers, find if the array contains any duplicates.</p>
-<p>Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.</p>
-<p><strong>Example 1:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,2,3,1]</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,2,3,4]</span><br><span class="line">Output: false</span><br></pre></td></tr></table></figure>
-<p><strong>Example 3:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,1,1,3,3,4,3,2,4,2]</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/19/LeetCode__217 Contains Duplicate/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/05/JavaAPI03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Guo Zhangruo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="右边的小耳朵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/05/JavaAPI03/" itemprop="url">Java学习日常之不知道叫啥了反正就是API</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T10:06:43+08:00">
-                2018-04-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Java API</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/05/JavaAPI03/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/05/JavaAPI03/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  6.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  25
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="本章内容介绍"><a href="#本章内容介绍" class="headerlink" title="本章内容介绍"></a>本章内容介绍</h2><p>1、Object</p>
-<p>2、String</p>
-<p>3、StringBuilder</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/05/JavaAPI03/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/03/LeetCode__205 Isomorphic Strings/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Guo Zhangruo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="右边的小耳朵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/03/LeetCode__205 Isomorphic Strings/" itemprop="url">LeetCode__205 Isomorphic Strings</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T17:23:50+08:00">
-                2018-04-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode-Hash-Table/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode/Hash Table</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/03/LeetCode__205 Isomorphic Strings/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/03/LeetCode__205 Isomorphic Strings/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  707
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Given two strings <strong>s</strong> and <strong>t</strong>, determine if they are isomorphic.</p>
-<p>Two strings are isomorphic if the characters in <strong>s</strong> can be replaced to get <strong>t</strong>.</p>
-<p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.</p>
-<p><strong>Example 1:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;egg&quot;, t = &quot;add&quot;</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;foo&quot;, t = &quot;bar&quot;</span><br><span class="line">Output: false</span><br></pre></td></tr></table></figure>
-<p><strong>Example 3:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;paper&quot;, t = &quot;title&quot;</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure>
-<p><strong>Note:</strong><br>You may assume both <strong>s</strong> and <strong>t</strong> have the same length.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/03/LeetCode__205 Isomorphic Strings/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/03/JavaAPI02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Guo Zhangruo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="右边的小耳朵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/03/JavaAPI02/" itemprop="url">Java学习日常之看一看吧肯定能用上的API</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-03T10:06:43+08:00">
-                2018-04-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-API/" itemprop="url" rel="index">
-                    <span itemprop="name">Java API</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/03/JavaAPI02/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/03/JavaAPI02/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  9
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="本章内容介绍"><a href="#本章内容介绍" class="headerlink" title="本章内容介绍"></a>本章内容介绍</h2><p>1、正则表达式的定义及使用</p>
-<p>2、Date类的用法</p>
-<p>3、Calendar类的用法</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/03/JavaAPI02/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/02/LeetCode__202 Happy Number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Guo Zhangruo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="右边的小耳朵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/02/LeetCode__202 Happy Number/" itemprop="url">LeetCode__202 Happy Number</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T12:56:32+08:00">
-                2018-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode-Hash-Table/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode/Hash Table</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/02/LeetCode__202 Happy Number/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/02/LeetCode__202 Happy Number/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  287
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Write an algorithm to determine if a number is “happy”.</p>
-<p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
-<p><strong>Example:</strong> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: 19</span><br><span class="line">Output: true</span><br><span class="line">Explanation: </span><br><span class="line">12 + 92 = 82</span><br><span class="line">82 + 22 = 68</span><br><span class="line">62 + 82 = 100</span><br><span class="line">12 + 02 + 02 = 1</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/02/LeetCode__202 Happy Number/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/01/LeetCode__170 Two Sum III/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Guo Zhangruo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="右边的小耳朵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/LeetCode__170 Two Sum III/" itemprop="url">LeetCode__170 Two Sum III</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T10:06:43+08:00">
-                2018-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode-Hash-Table/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode/Hash Table</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/01/LeetCode__170 Two Sum III/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/01/LeetCode__170 Two Sum III/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  305
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Design and implement a TwoSum class. It should support the following operations:add and find.</p>
-<ul>
-<li>add - Add the number to an internal data structure.</li>
-<li>find - Find if there exists any pair of numbers which sum is equal to the value.</li>
-</ul>
-<p>For example： add(1); add(3); add(5);</p>
-<pre><code>find(4) -&gt; true
-
-find(7) -&gt; false
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/01/LeetCode__170 Two Sum III/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2277,7 +2905,7 @@ find(7) -&gt; false
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2367,7 +2995,7 @@ find(7) -&gt; false
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">您的朋友小锅已经疯狂码了25.2k字</span>
+  <span class="post-count">您的朋友小锅已经疯狂码了33.9k字</span>
 </div>
 
 <div class= "since when">
