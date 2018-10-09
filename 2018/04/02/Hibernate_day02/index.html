@@ -98,24 +98,24 @@
 
 
 
-<meta name="description" content="Hibernate__02 回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件  编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态  Hibernate的一级缓存  Hibernate操作持久化对象的方法  Hibernate的基本查询     Hibernate的持久化">
+<meta name="description" content="Hibernate__02 回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件  编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态  Hibernate的一级缓存  Hibernate操作持久化对象的方法  Hibernate的基本查询">
 <meta property="og:type" content="article">
-<meta property="og:title" content="右边的小耳朵">
-<meta property="og:url" content="justkiddinguo.com/2018/10/09/Hibernate_day02/index.html">
+<meta property="og:title" content="Hibernate_day02">
+<meta property="og:url" content="justkiddinguo.com/2018/04/02/Hibernate_day02/index.html">
 <meta property="og:site_name" content="右边的小耳朵">
-<meta property="og:description" content="Hibernate__02 回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件  编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态  Hibernate的一级缓存  Hibernate操作持久化对象的方法  Hibernate的基本查询     Hibernate的持久化">
+<meta property="og:description" content="Hibernate__02 回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件  编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态  Hibernate的一级缓存  Hibernate操作持久化对象的方法  Hibernate的基本查询">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="/09/Hibernate_day02/F:/桌面/H02.png">
+<meta property="og:image" content="/02/Hibernate_day02/F:/桌面/H02.png">
 <meta property="og:image" content="file:///C:/Users/CY/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png">
-<meta property="og:image" content="/09/Hibernate_day02/C:/Users/CY/AppData/Local/Temp/1536895433103.png">
-<meta property="og:image" content="/09/Hibernate_day02/图片/02-Session的快照机制.bmp">
-<meta property="og:image" content="/09/Hibernate_day02/图片/03-丢失更新.bmp">
-<meta property="og:image" content="/09/Hibernate_day02/F:/桌面/Pic1.PNG">
-<meta property="og:updated_time" content="2018-10-09T00:37:06.000Z">
+<meta property="og:image" content="/02/Hibernate_day02/C:/Users/CY/AppData/Local/Temp/1536895433103.png">
+<meta property="og:image" content="/02/Hibernate_day02/图片/02-Session的快照机制.bmp">
+<meta property="og:image" content="/02/Hibernate_day02/图片/03-丢失更新.bmp">
+<meta property="og:image" content="/02/Hibernate_day02/F:/桌面/Pic1.PNG">
+<meta property="og:updated_time" content="2018-10-09T00:59:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="右边的小耳朵">
-<meta name="twitter:description" content="Hibernate__02 回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件  编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态  Hibernate的一级缓存  Hibernate操作持久化对象的方法  Hibernate的基本查询     Hibernate的持久化">
-<meta name="twitter:image" content="/09/Hibernate_day02/F:/桌面/H02.png">
+<meta name="twitter:title" content="Hibernate_day02">
+<meta name="twitter:description" content="Hibernate__02 回顾上一章的内容：  Hibernate框架的概述：ORM  框架的入门的程序 ​    编写映射的配置文件 编写核心的配置文件  编写程序  配置的文件  使用的接口和方法    本章内容：  Hibernate持久化对象的状态  Hibernate的一级缓存  Hibernate操作持久化对象的方法  Hibernate的基本查询">
+<meta name="twitter:image" content="/02/Hibernate_day02/F:/桌面/H02.png">
 
 
 
@@ -146,13 +146,13 @@
 
 
 
-  <link rel="canonical" href="justkiddinguo.com/2018/10/09/Hibernate_day02/"/>
+  <link rel="canonical" href="justkiddinguo.com/2018/04/02/Hibernate_day02/"/>
 
 
 
 
 
-  <title> | 右边的小耳朵</title>
+  <title>Hibernate_day02 | 右边的小耳朵</title>
   
 
 
@@ -313,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/10/09/Hibernate_day02/">
+    <link itemprop="mainEntityOfPage" href="justkiddinguo.com/2018/04/02/Hibernate_day02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Guo Zhangruo">
@@ -330,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">Hibernate_day02</h1>
         
 
         <div class="post-meta">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T08:36:24+08:00">
-                2018-10-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T13:31:01+08:00">
+                2018-04-02
               </time>
             
 
@@ -353,6 +353,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hibernate/" itemprop="url" rel="index">
+                    <span itemprop="name">Hibernate</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -361,8 +383,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/10/09/Hibernate_day02/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/09/Hibernate_day02/" itemprop="commentCount"></span>
+                <a href="/2018/04/02/Hibernate_day02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/02/Hibernate_day02/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -447,10 +469,11 @@
 <li><p>Hibernate操作持久化对象的方法</p>
 </li>
 <li><p>Hibernate的基本查询</p>
-<p><img src="/09/Hibernate_day02/F:/桌面\H02.png" alt="H02"></p>
+<p><img src="/02/Hibernate_day02/F:/桌面\H02.png" alt="H02"></p>
 </li>
 </ul>
 <hr>
+<a id="more"></a>
 <h3 id="Hibernate的持久化类"><a href="#Hibernate的持久化类" class="headerlink" title="Hibernate的持久化类"></a>Hibernate的持久化类</h3><hr>
 <p><strong>什么是持久化类</strong><br>持久化类:就是一个Java类（编写的JavaBean），这个Java类与表建立了映射关系就可以成为持久化类，它可以new持久化对象。</p>
 <p> <strong>持久化类 = JavaBean + xxx.hbm.xml</strong></p>
@@ -584,7 +607,7 @@
 </ul>
 <p><strong>注意：持久态对象有自动更新数据库的能力——Session的一级缓存</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">     Session session = HibernateUtils.getSession();</span><br><span class="line">     Transaction tr = session.beginTransaction();</span><br><span class="line">     <span class="comment">//获取到持久态对象，具有自动更新数据库的能力</span></span><br><span class="line">     User user = session.get(User.class,<span class="number">2</span>);<span class="comment">//先通过主键进行查询</span></span><br><span class="line">     System.out.println(user.getName());</span><br><span class="line">     user.setName(<span class="string">"gavin"</span>);</span><br><span class="line">     <span class="comment">//理论上需编写代码：session.update(user);但实际上不需要</span></span><br><span class="line">     tr.commit();</span><br><span class="line">     session.close();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p> <img src="/09/Hibernate_day02/C:/Users\CY\AppData\Local\Temp\1536895433103.png" alt="1536895433103"></p>
+<p> <img src="/02/Hibernate_day02/C:/Users\CY\AppData\Local\Temp\1536895433103.png" alt="1536895433103"></p>
 </li>
 </ol>
 <hr>
@@ -630,7 +653,7 @@
 </ul>
 </li>
 </ol>
-<p><img src="/09/Hibernate_day02/./图片/02-Session的快照机制.bmp" alt="">    </p>
+<p><img src="/02/Hibernate_day02/./图片/02-Session的快照机制.bmp" alt="">    </p>
 <hr>
 <p><strong>控制Session的一级缓存（了解）</strong></p>
 <p>Session接口中与一级缓存相关的方法</p>
@@ -740,7 +763,7 @@
 </ul>
 </li>
 </ol>
-<p><img src="/09/Hibernate_day02/./图片/03-丢失更新.bmp" alt="">    </p>
+<p><img src="/02/Hibernate_day02/./图片/03-丢失更新.bmp" alt="">    </p>
 <hr>
 <p><strong>绑定本地的Session</strong></p>
 <ol>
@@ -749,7 +772,7 @@
 <li><p>一种是通过参数的方式传递下去</p>
 </li>
 <li><p>另一种是把Connection绑定到ThreadLocal对象中，只要是同一个线程，它的Connection就是同一个。</p>
-<p><img src="/09/Hibernate_day02/F:/桌面\Pic1.PNG" alt="Pic1"></p>
+<p><img src="/02/Hibernate_day02/F:/桌面\Pic1.PNG" alt="Pic1"></p>
 </li>
 </ul>
 </li>
@@ -806,8 +829,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/09/drools workbench/Drools WorkBench部署/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2018/04/02/LeetCode__202 Happy Number/" rel="next" title="LeetCode__202 Happy Number">
+                <i class="fa fa-chevron-left"></i> LeetCode__202 Happy Number
               </a>
             
           </div>
@@ -816,8 +839,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/09/H2/Hibernate_day02/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/03/JavaAPI02/" rel="prev" title="Java学习日常之看一看吧肯定能用上的API">
+                Java学习日常之看一看吧肯定能用上的API <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
